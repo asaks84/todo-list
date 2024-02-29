@@ -1,0 +1,26 @@
+[
+  {
+    "text": "Todo 01",
+    "project": "Project 01",
+    "checked": true,
+    "dueDate": "2024-03-30",
+    "priority": 3,
+    "notes": ["note 01", "note 03", "01"]
+  },
+  {
+    "text": "Todo 02",
+    "project": "Project 01",
+    "checked": true,
+    "dueDate": "2024-03-30",
+    "priority": 1,
+    "notes": []
+  },
+  {
+    "text": "Todo 03",
+    "project": "Project 03",
+    "checked": true,
+    "dueDate": "2024-03-30",
+    "priority": 0,
+    "notes": []
+  }
+]
