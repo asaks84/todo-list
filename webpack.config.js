@@ -13,7 +13,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'assets/[name].js',
+    filename: './assets/[name].js',
     assetModuleFilename: 'assets/images/[name][ext][query]',
     // clean: true,
   },
@@ -83,6 +83,10 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/,
         type: 'asset/resource',
       },
+      {
+        test: /\.json$/,
+        type: 'json',
+    }
     ],
   },
 };

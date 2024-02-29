@@ -1,4 +1,7 @@
-import { addLine } from "./constructor";
+import './data.json'
+import { populate } from "./getJSON";
+
+export const todoList = [];
 const listItems = document.querySelectorAll('#listItems > li');
 const isChecked = (e) => e.checked === true;
 
@@ -10,8 +13,6 @@ export function editLine(e) {
                       : text.classList.remove('text-decoration-line-through');
 }
 
-for (let i = 0; i < 4; i++) {
-  addLine();
-};
+populate();
 
 listItems.forEach((e) => e.addEventListener('change', editLine));

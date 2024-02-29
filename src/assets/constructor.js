@@ -1,7 +1,7 @@
 import { editLine } from "./script";
 const ul = document.querySelector('ul#listItems');
 
-export function addLine () {
+export function addLine (obj) {
   // list items
   const li = document.createElement('li');
   const checkbox = document.createElement('input');
@@ -22,8 +22,8 @@ export function addLine () {
   btnDelete.classList.add('btn', 'btn-danger');
 
   // filling elements content
-  text.textContent = 'Todo 4';
-  code.textContent = 'Project 5';
+  text.textContent = obj.text;
+  code.textContent = obj.project;
   btnEdit.textContent = 'Edit';
   btnDelete.textContent = 'Delete';
 
