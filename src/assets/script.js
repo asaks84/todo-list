@@ -1,18 +1,19 @@
-import './data.json'
+import './style.scss';
 import { populate } from "./getJSON";
 
 export const todoList = [];
-const listItems = document.querySelectorAll('#listItems > li');
+const listItems = document.querySelector('.accordion-header > input[type=checkbox]');
 const isChecked = (e) => e.checked === true;
 
 export function editLine(e) {
   const { target } = e;
   const text = target.nextElementSibling;
-
   (isChecked(target)) ? text.classList.add('text-decoration-line-through') 
                       : text.classList.remove('text-decoration-line-through');
+
+  e.stopPropagation();
 }
 
-populate();
+// populate();
 
-listItems.forEach((e) => e.addEventListener('change', editLine));
+listItems.addEventListener('change', editLine);

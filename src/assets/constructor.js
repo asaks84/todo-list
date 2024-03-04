@@ -1,11 +1,15 @@
 import { editLine } from "./script";
 const ul = document.querySelector('ul#listItems');
 
-export function addLine (obj) {
+export function addLine (obj, number) {
   // list items
-  const li = document.createElement('li');
+  const item = document.createElement('div');
   const checkbox = document.createElement('input');
-  const text = document.createElement('span');
+  const header = document.createElement('span');
+  const btnHeader = document.createElement('button');
+
+  const listDetails = document.createElement('div');
+  const detailsContent = document.createElement('div');
   const code = document.createElement('code');
   const btnEdit = document.createElement('button');
   const btnDelete = document.createElement('button');

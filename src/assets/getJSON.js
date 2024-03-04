@@ -3,9 +3,9 @@ import { todoList } from "./script";
 
 export async function populate() {
   const requestURL = './assets/data.json';
-  // const request = new Request(requestURL);
+  const request = new Request(requestURL);
 
-  fetch(requestURL)
+  fetch(request)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -17,6 +17,5 @@ export async function populate() {
         todoList.push(response[i]);
         addLine(todoList[i]);
       }
-      console.log(todoList)
     })
 }

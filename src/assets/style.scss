@@ -1,0 +1,20 @@
+// .accordion-button::after,
+// .accordion-button:not(.colapse)::after {
+//   background-image: none;
+// }
+.accordion-button:not(.collapsed) {
+  background: none;
+}
+.accordion-item {
+  position: relative;
+}
+.form-check-input{
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.accordion-button {
+  width: auto;
+}
+.accordion-header code {
+  font-size: .875rem ;
+}
