@@ -1,0 +1,25 @@
+/*!********************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/assets/style.scss ***!
+  \********************************************************************************************************************************************/
+.accordion-button:not(.collapsed) {
+  background: none;
+}
+
+.accordion-item {
+  position: relative;
+}
+
+.form-check-input {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.accordion-button {
+  width: auto;
+}
+
+.accordion-header code {
+  font-size: 0.875rem;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXNzZXRzL21haW4uY3NzIiwibWFwcGluZ3MiOiI7OztBQUlBO0VBQ0U7QUFIRjs7QUFLQTtFQUNFO0FBRkY7O0FBSUE7RUFDRTtFQUNBO0FBREY7O0FBR0E7RUFDRTtBQUFGOztBQUVBO0VBQ0U7QUFDRixDIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vdG9kby1saXN0Ly4vc3JjL2Fzc2V0cy9zdHlsZS5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIC5hY2NvcmRpb24tYnV0dG9uOjphZnRlcixcclxuLy8gLmFjY29yZGlvbi1idXR0b246bm90KC5jb2xhcHNlKTo6YWZ0ZXIge1xyXG4vLyAgIGJhY2tncm91bmQtaW1hZ2U6IG5vbmU7XHJcbi8vIH1cclxuLmFjY29yZGlvbi1idXR0b246bm90KC5jb2xsYXBzZWQpIHtcclxuICBiYWNrZ3JvdW5kOiBub25lO1xyXG59XHJcbi5hY2NvcmRpb24taXRlbSB7XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG59XHJcbi5mb3JtLWNoZWNrLWlucHV0e1xyXG4gIHdpZHRoOiAxLjJyZW07XHJcbiAgaGVpZ2h0OiAxLjJyZW07XHJcbn1cclxuLmFjY29yZGlvbi1idXR0b24ge1xyXG4gIHdpZHRoOiBhdXRvO1xyXG59XHJcbi5hY2NvcmRpb24taGVhZGVyIGNvZGUge1xyXG4gIGZvbnQtc2l6ZTogLjg3NXJlbSA7XHJcbn0iXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=*/
