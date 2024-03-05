@@ -22,6 +22,6 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    allowShortCircuit: false,
+
   },
 };

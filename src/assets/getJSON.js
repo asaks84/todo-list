@@ -1,21 +1,26 @@
-import { addLine } from "./constructor";
-import { todoList } from "./script";
+import addLine from './constructor';
+
+export const todoList = [];
+
+async function connect() {
+  const requestURL = './assets/data.json';
+  const request = await fetch(requestURL);
+  if (!request.ok) {
+    throw new Error(`HTTP error! Status: ${request.status}`);
+  }
+
+  const response = await request.json();
+  return response;
+}
 
 export async function populate() {
-  const requestURL = './assets/data.json';
-  const request = new Request(requestURL);
+  const value = await connect();
 
-  fetch(request)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((response) => {
-      for (let i in response) {
-        todoList.push(response[i]);
-        addLine(todoList[i]);
-      }
-    })
+  value.forEach((obj) => {
+    todoList.push(obj);
+  });
+
+  todoList.forEach((obj) => {
+    addLine(obj, todoList.indexOf(obj));
+  });
 }
