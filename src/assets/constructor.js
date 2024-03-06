@@ -52,6 +52,10 @@ function addLine(obj, num) {
   checkbox.addEventListener('change', setChecked);
 
   item.classList.add('accordion-item');
+  setAttrs(item, {
+    'data-position': `${num}`,
+  });
+
   header.classList.add('accordion-header', 'p-1', 'd-flex', 'align-items-center', 'gap-1');
   btnHeader.classList.add('accordion-button', 'collapsed', 'flex-fill');
   span.classList.add('flex-fill');
