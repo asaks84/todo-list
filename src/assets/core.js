@@ -1,4 +1,4 @@
-const CreateItem = (text, deadline = 0, project = null, priorityNum = 0) => {
+function CreateItem(text, deadline = 0, project = null, priorityNum = 0) {
   let title = text;
   let dueDate = deadline;
   let projectName = project;
@@ -6,25 +6,38 @@ const CreateItem = (text, deadline = 0, project = null, priorityNum = 0) => {
   let checked = false;
   const notes = [];
 
-  function editTitle(val) { title = val; }
+  function editTitle(val) {
+    title = val;
+  }
   const getTitle = () => title;
-
-  function editPriority(val) { priority = val; }
+  function editPriority(val) {
+    priority = val;
+  }
   const getPriority = () => priority;
-
-  function editDueDate(val) { dueDate = val; }
-  function deleteDuoDate() { dueDate = 0; }
+  function deleteDuoDate() {
+    dueDate = 0;
+  }
+  function editDueDate(val) {
+    dueDate = val;
+  }
   const getDueDate = () => dueDate;
-
-  function editProject(val) { projectName = val; }
+  function editProject(val) {
+    projectName = val;
+  }
   const getProject = () => projectName;
-
-  function editCheck() { checked = !checked; }
+  function editCheck() {
+    checked = !checked;
+  }
   const getCheck = () => checked;
-
-  function addNote(val) { notes.push(val); }
-  function editNote(pos, val) { notes[pos] = val; }
-  function deleteNote(pos) { notes.splice(pos, 1); }
+  function addNote(val) {
+    notes.push(val);
+  }
+  function deleteNote(pos) {
+    notes.splice(pos, 1);
+  }
+  function editNote(pos, val) {
+    notes[pos] = val;
+  }
   const getAllNotes = () => notes;
   const getNote = (pos) => notes[pos];
 
@@ -51,91 +64,124 @@ const CreateItem = (text, deadline = 0, project = null, priorityNum = 0) => {
     editCheck,
     getCheck,
   };
-};
+}
 
-const todoList = [];
+const todoList = (() => {
+  const list = [];
+  const complete = [];
 
-const addItem = (text, deadline, project, priority) => {
-  const newItem = CreateItem(text, deadline, project, priority);
-  todoList.push(newItem);
-};
+  const getLength = (data = list) => {
+    if (typeof data === 'number') {
+      return complete.length;
+    }
+    return data.length;
+  };
+  const selectItem = (pos, arr = list) => arr[pos];
+  const getProjects = () => list.map((item) => item.getProject())
+    .filter((value) => value !== null);
 
-const todoTitle = 'List item 01';
-const deadline = '25/12/2020';
-const todoItem02 = 'List Item 02';
-
-addItem(todoTitle, deadline);
-addItem(todoItem02);
-
-todoList[0].addNote('Primera nota criada');
-todoList[0].addNote('Segunda nota criada');
-todoList[0].addNote('Terceira nota criada');
-
-// console.log(`
-//   Nome da lista: ${todoList[0].getTitle()}
-//   Está marcado? ${todoList[0].getCheck()}
-//   Todas as notas: ${todoList[0].getAllNotes()}
-// `);
-
-todoList[0].editCheck();
-todoList[0].editNote(1, 'Segunda nota EDITADA');
-// console.log(`
-//   Nome da lista: ${todoList[0].getTitle()}
-//   Está marcado? ${todoList[0].getCheck()}
-//   Todas as notas: ${todoList[0].getAllNotes()}
-// `);
-
-const toJSON = () => {
-  const toSave = [];
-
-  function saveObject(pos) {
-    const title = todoList[pos].getTitle();
-    const project = todoList[pos].getProject();
-    const dueDate = todoList[pos].getDueDate();
-    const priority = todoList[pos].getPriority();
-    const checked = todoList[pos].getCheck();
-    const notes = [];
-    todoList[pos].getAllNotes().forEach((e) => notes.push(e));
-
-    return {
-      title,
-      checked,
-      project,
-      dueDate,
-      priority,
-      notes,
-    };
+  function reset() {
+    list.length = 0;
+    complete.length = 0;
   }
-  todoList.forEach((e) => {
-    toSave.push(saveObject(todoList.indexOf(e)));
-  });
-  // console.log(`
-  //   toSave typeof: ${typeof toSave}
-  // `);
-  // console.log(toSave);
+  function addItem(text, deadline, project, priority) {
+    const newItem = CreateItem(text, deadline, project, priority);
+    list.push(newItem);
+  }
 
-  return JSON.stringify(toSave, '', 1);
-};
-const restore = () => {
-  const arr = JSON.parse(toJSON());
-  todoList.length = 0;
-  const eachKey = (pos, key) => arr[pos][key];
+  const toJSON = () => {
+    const listData = list.map((item) => ({
+      title: item.getTitle(),
+      project: item.getProject(),
+      dueDate: item.getDueDate(),
+      priority: item.getPriority(),
+      checked: item.getCheck(),
+      notes: item.getAllNotes(),
+    }));
 
-  arr.forEach((item) => {
-    const title = eachKey(arr.indexOf(item), 'title');
-    const dueDate = eachKey(arr.indexOf(item), 'dueDate');
-    const project = eachKey(arr.indexOf(item), 'project');
-    const priority = eachKey(arr.indexOf(item), 'priority');
-    const checked = eachKey(arr.indexOf(item), 'checked');
-    const notes = [];
-    arr[arr.indexOf(item)].notes.forEach((note) => notes.push(note));
+    const completeData = complete.map((item) => ({
+      title: item.getTitle(),
+      project: item.getProject(),
+      dueDate: item.getDueDate(),
+      priority: item.getPriority(),
+      checked: item.getCheck(),
+      notes: item.getAllNotes(),
+    }));
 
-    addItem(title, dueDate, project, priority);
-    if (checked === true) { todoList[arr.indexOf(item)].editCheck(); }
-    if (notes.length > 0) { notes.forEach((note) => todoList[arr.indexOf(item)].addNote(note)); }
-  });
-};
+    return JSON.stringify({ list: listData, complete: completeData }, '', 1);
+  };
 
-restore();
-console.log('after', todoList);
-// const elem = toJSON();
+  const restore = (data) => {
+    reset();
+    const { list: listData, complete: completeData } = JSON.parse(data);
+
+    listData.forEach(
+      ({
+        title, project, dueDate, priority, notes,
+      }) => {
+        const newItem = CreateItem(title, dueDate, project, priority);
+        notes.forEach((note) => newItem.addNote(note));
+        list.push(newItem);
+      },
+    );
+
+    completeData.forEach(
+      ({
+        title, project, dueDate, priority, notes,
+      }) => {
+        const newItem = CreateItem(title, dueDate, project, priority);
+        newItem.editCheck();
+        notes.forEach((note) => newItem.addNote(note));
+        complete.push(newItem);
+      },
+    );
+  };
+
+  function setChecked(pos) {
+    list[pos].editCheck();
+    const removed = list.splice(pos, 1);
+    return complete.push(removed[0]);
+  }
+
+  // ############
+  // CONSOLE LOG
+  // ############
+
+  // function readLog() {
+  //   for (let i = 0; i < list.length; i += 1) {
+  //     console.log(`${list[i].getTitle()}`);
+  //   }
+  //   console.log(`Tasks done: ${getLength(complete)}
+  //   `);
+  // }
+
+  return {
+    getLength,
+    selectItem,
+    addItem,
+    restore,
+    toJSON,
+    setChecked,
+    getProjects,
+    reset,
+  };
+})();
+
+function populateStorage() {
+  localStorage.setItem('data', todoList.toJSON());
+}
+
+function restoreStorage() { todoList.restore(localStorage.getItem('data')); }
+
+window.onchange = populateStorage();
+window.onload = restoreStorage();
+
+export default todoList;
+
+/*
+###########################################
+################           ################
+################ TEST AREA ################
+################           ################
+###########################################
+*/
