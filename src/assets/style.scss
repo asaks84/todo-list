@@ -2,6 +2,8 @@
 // .accordion-button:not(.colapse)::after {
 //   background-image: none;
 // }
+@import 'flatpickr/dist/flatpickr.min.css';
+
 .accordion-button:not(.collapsed) {
   background: none;
 }
@@ -17,4 +19,65 @@
 }
 .accordion-header code {
   font-size: .875rem ;
+}
+
+.btn-outline-warning:hover {
+  color: white;
+}
+
+div.date {
+  position: relative;
+
+  & a.input-button {
+    position: absolute;
+    top: .45rem;
+    right: .45rem;
+    z-index: 10;
+    text-decoration: none;
+    display: block;
+    // padding: 8.5px 12px;
+    border-left: 0;
+    cursor: pointer;
+    align-self: center;
+    justify-content: center;
+    line-height: 1;
+  }
+}
+
+.flatpickr-calendar,
+.flatpickr-weekdays,
+.dayContainer,
+.flatpickr-days {
+  width: 260px !important;
+  min-width: auto;
+  max-width: auto;
+}
+
+.flatpickr-day {
+  border-radius: .5rem;
+  width: .5rem;
+  height: 1.5rem;
+  line-height: normal;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {   
+  border-color: rgba(239, 225, 104, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(239, 230, 104, 0.6);
+  outline: 0 none;
+  background: none;
 }
