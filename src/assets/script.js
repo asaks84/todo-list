@@ -1,11 +1,14 @@
 import './style.scss';
 import flatpickr from 'flatpickr';
 import IMask from 'imask';
+import { maskDate } from './date';
+import todoList from './core';
 
+const allInputs = document.querySelectorAll('input');
 const addField = document.querySelector('#addItem');
 const dueDate = document.querySelector('#dueDate');
 
-function openPlusBtn() {
+function showPlusBtn() {
   const plusBtn = addField.nextElementSibling;
   if (addField.value !== '') {
     plusBtn.classList.remove('d-none');
@@ -15,37 +18,26 @@ function openPlusBtn() {
   }
 }
 
-const maskDate = {
-  mask: [
-    {
-      mask: 'd/`m/`Y',
-      blocks: {
-        d: {
-          mask: IMask.MaskedRange,
-          from: 1,
-          to: 31,
-          maxLength: 2,
-        },
-        m: {
-          mask: IMask.MaskedRange,
-          from: 1,
-          to: 12,
-          maxLength: 2,
-        },
-        Y: {
-          mask: IMask.MaskedRange,
-          from: 1000,
-          to: 9999,
-        },
-      },
-    },
-  ],
-};
+const mask = IMask(dueDate, maskDate);
 
-IMask(dueDate, maskDate);
-
-addField.addEventListener('keydown', openPlusBtn);
-addField.addEventListener('keyup', openPlusBtn);
+addField.addEventListener('keydown', showPlusBtn);
+addField.addEventListener('keyup', showPlusBtn);
 dueDate.setAttribute('autocomplete', 'off');
 
-flatpickr(dueDate, { dateFormat: 'd/m/Y', allowInput: true });
+flatpickr(dueDate, {
+  dateFormat: 'd/m/Y',
+  allowInput: true,
+  onChange(selectedDates, dateStr, instance) {
+    mask.updateValue(dateStr);
+    console.log(dueDate.value);
+  },
+});
+
+function populateStorage() {
+  localStorage.setItem('data', todoList.toJSON());
+  console.log('populate rodou');
+}
+
+function restoreStorage() { todoList.restore(localStorage.getItem('data')); }
+allInputs.forEach((e) => e.addEventListener('change', populateStorage));
+window.onload = restoreStorage();

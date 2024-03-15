@@ -167,15 +167,6 @@ const todoList = (() => {
   };
 })();
 
-function populateStorage() {
-  localStorage.setItem('data', todoList.toJSON());
-}
-
-function restoreStorage() { todoList.restore(localStorage.getItem('data')); }
-
-window.onchange = populateStorage();
-window.onload = restoreStorage();
-
 export default todoList;
 
 /*
