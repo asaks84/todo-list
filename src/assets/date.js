@@ -2,7 +2,6 @@
 import { format } from 'date-fns';
 import IMask from 'imask';
 
-const dueDate = document.querySelector('#dueDate');
 const splitToCode = (date) => date.split('/').reverse().join('/').replaceAll('/', ', ');
 export const toInput = (data) => format(new Date(splitToCode(data)), 'dd/LL/yyyy');
 // const getData = (arr) => arr.forEach(element => {
@@ -10,8 +9,6 @@ export const toInput = (data) => format(new Date(splitToCode(data)), 'dd/LL/yyyy
 // });
 
 export const maskDate = {
-  prepare: (value) => value, // onChange event
-  commit: (value) => (dueDate.value = value),
   mask: [
     {
       mask: 'd/`m/`Y',

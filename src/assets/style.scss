@@ -4,6 +4,16 @@
 // }
 @import 'flatpickr/dist/flatpickr.min.css';
 
+a#addItem {
+  cursor: pointer;
+
+  &:hover {
+    color:brown;
+  }
+}
+
+// EDIÇÃO DE CSS DE TERCEIROS
+
 .accordion-button:not(.collapsed) {
   background: none;
 }
@@ -26,12 +36,13 @@
 }
 
 div.date {
+  $spacing: 2rem;
   position: relative;
 
   & a.input-button {
     position: absolute;
-    top: .65rem;
-    right: .45rem;
+    top: .55rem;
+    left: calc($spacing - calc($spacing / 2) - .3rem );
     z-index: 10;
     text-decoration: none;
     display: block;
@@ -42,13 +53,24 @@ div.date {
     justify-content: center;
     line-height: 1;
   }
+
+  & input#dueDate {
+    padding-left: $spacing;
+
+    &::placeholder {
+      color: #424242;
+      opacity: .5;
+      position: absolute;
+      left: $spacing;
+    }
+  }
 }
 
 .flatpickr-calendar,
 .flatpickr-weekdays,
 .dayContainer,
 .flatpickr-days {
-  width: 260px !important;
+  width: 230px !important;
   min-width: auto;
   max-width: auto;
 }
@@ -58,6 +80,53 @@ div.date {
   width: .5rem;
   height: 1.5rem;
   line-height: normal;
+}
+
+input[type="text"] {
+  border: none;
+  // border-bottom: 1px solid lightgray;
+  font-weight: 500;
+  color: #707070;
+
+  &::placeholder {
+    color: #424242;
+    opacity: .5;
+    position: absolute;
+    left: 1rem;
+  }
+
+}
+
+#addMore,
+#saveItem {
+  opacity: 0;
+  transition:opacity linear 150ms;
+}
+
+#addMore.revealItem,
+#saveItem.revealItem {
+  opacity: 1;
+}
+
+textarea,
+select,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+  background: none;
+  background-image: none !important;
 }
 
 textarea:focus,
@@ -75,9 +144,20 @@ input[type="url"]:focus,
 input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="color"]:focus,
+select.form-select:focus,
 .uneditable-input:focus {   
-  border-color: rgba(239, 225, 104, 0.8);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(239, 230, 104, 0.6);
+  box-shadow: none;
+  box-shadow: none;
+  // border-color: lightgray;
+  // border-color: rgba(239, 225, 104, 0.8);
+  // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(239, 230, 104, 0.6);
   outline: 0 none;
   background: none;
+  color: #424242;
+}
+
+.bg-gray {
+  & > div {
+    background-color: #f5f5f5;
+  }
 }
