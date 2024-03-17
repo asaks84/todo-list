@@ -4,10 +4,10 @@
 // }
 @import 'flatpickr/dist/flatpickr.min.css';
 
-a#addItem {
+a {
   cursor: pointer;
 
-  &:hover {
+  &#addItem:hover {
     color:brown;
   }
 }
@@ -128,6 +128,9 @@ input[type="color"],
   background: none;
   background-image: none !important;
 }
+input[type="checkbox"]:focus {
+  box-shadow: none;
+}
 
 textarea:focus,
 input[type="text"]:focus,
@@ -146,8 +149,7 @@ input[type="tel"]:focus,
 input[type="color"]:focus,
 select.form-select:focus,
 .uneditable-input:focus {   
-  box-shadow: none;
-  box-shadow: none;
+ box-shadow: none;
   // border-color: lightgray;
   // border-color: rgba(239, 225, 104, 0.8);
   // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(239, 230, 104, 0.6);

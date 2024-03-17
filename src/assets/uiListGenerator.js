@@ -1,3 +1,6 @@
+import { populateStorage } from './JSONFunctions';
+import { setAttrs } from './uiFunctions';
+
 const list = document.querySelector('div#list');
 const isChecked = (e) => e.checked === true;
 const hasNotes = (obj) => obj.length > 0;
@@ -17,12 +20,6 @@ function insertNote(notes, body) {
     const contentDiv = document.createElement('div');
     contentDiv.innerHTML = content;
     body.appendChild(contentDiv);
-  });
-}
-
-function setAttrs(elem, attrs) {
-  Object.keys(attrs).forEach((key) => {
-    elem.setAttribute(key, attrs[key]);
   });
 }
 
@@ -50,6 +47,7 @@ function addLine(obj, num) {
   checkbox.setAttribute('type', 'checkbox');
   checkbox.classList.add('form-check-input');
   checkbox.addEventListener('change', setChecked);
+  checkbox.addEventListener('change', populateStorage);
 
   item.classList.add('accordion-item');
   setAttrs(item, {
@@ -79,7 +77,7 @@ function addLine(obj, num) {
 
   // FILLING CONTENT
   // header
-  span.textContent = obj.text;
+  span.textContent = obj.title;
   code.textContent = obj.project;
 
   // body

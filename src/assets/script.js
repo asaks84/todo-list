@@ -1,15 +1,11 @@
-/* eslint-disable no-param-reassign */
+/* eslint-disable max-len */
 import './style.scss';
-import flatpickr from 'flatpickr';
-import { Portuguese } from 'flatpickr/dist/l10n/pt';
-import IMask from 'imask';
-import { maskDate } from './date';
 import todoList from './core';
+import addLine from './uiListGenerator';
+import { populateStorage, restoreStorage } from './JSONFunctions';
 
-const allInputs = document.querySelectorAll('input');
+const input = document.querySelector('input');
 const addField = document.querySelector('input#itemTitle');
-const dueDate = document.querySelector('#dueDate');
-const flatElem = document.querySelector('div.flatpickr');
 
 // Enquanto escreve o título, ele mostra um botão para adicionar mais opções, se assim desejar
 function showPlusBtn() {
@@ -34,73 +30,24 @@ function showPlusBtn() {
 addField.addEventListener('keydown', showPlusBtn);
 addField.addEventListener('keyup', showPlusBtn);
 
-// DATE FIELD
-
-const mask = IMask(dueDate, maskDate);
-allInputs.forEach((e) => e.setAttribute('autocomplete', 'off'));
-
-flatpickr(flatElem, {
-  dateFormat: 'd/m/Y',
-  disableMobile: 'true',
-  allowInput: true,
-  wrap: true,
-  locale: Portuguese,
-  onChange(selectedDates, dateStr) {
-    mask.updateValue(dateStr);
-  },
-});
-
-function populateStorage() {
-  localStorage.setItem('data', todoList.toJSON());
-}
-
-function restoreStorage() {
-  todoList.restore(localStorage.getItem('data'));
-}
-allInputs.forEach((e) => e.addEventListener('change', populateStorage));
+input.addEventListener('change', populateStorage);
+input.setAttribute('autocomplete', 'off');
 window.onload = restoreStorage();
 
-// testes
+// tests
 
-function removeSpecials(texto) {
-  // eliminando acentuação
-  texto = texto.replace(/[ÀÁÂÃÄÅ]/, 'A');
-  texto = texto.replace(/[àáâãäå]/, 'a');
-  texto = texto.replace(/[ÈÉÊË]/, 'E');
-  texto = texto.replace(/[èéêë]/, 'e');
-  texto = texto.replace(/[ÌÍÏÎ]/, 'I');
-  texto = texto.replace(/[ìíïî]/, 'i');
-  texto = texto.replace(/[ÒÓÕÔÖ]/, 'O');
-  texto = texto.replace(/[òóõôö]/, 'o');
-  texto = texto.replace(/[ÙÚÛÜ]/, 'O');
-  texto = texto.replace(/[ùúûü]/, 'u');
-  texto = texto.replace(/[Ç]/, 'C');
-  texto = texto.replace(/[ç]/, 'c');
-  // console.log('return', texto.replace(/[^a-z0-9]/gi));
-  return texto;
-}
+// filtering special characters
 
-function autoComplete(search) {
-  const projects = todoList.getProjects();
-  console.log(projects);
-  return projects.filter((value) => {
-    const valuelowercase = removeSpecials(value.toLowerCase());
-    const searchlowercase = removeSpecials(search.toLowerCase());
-    return valuelowercase.includes(searchlowercase);
-  });
-}
-const inputField = document.querySelector('#enterProject');
-const sugestoes = document.querySelector('.sugestoes');
-
-inputField.addEventListener('input', ({ target }) => {
-  const inputData = target.value;
-  if (inputData.length) {
-    const autoCompleteOptions = autoComplete(inputData);
-    // console.log(autoCompleteOptions);
-    sugestoes.innerHTML = `${autoCompleteOptions.map((value) => `<option value="${value}" />`).join('')}`;
-  }
-});
-
-todoList.addItem('Item 1');
-todoList.addItem('Item 2');
-todoList.addItem('Item 3');
+// todoList.addItem('Item 4');
+// todoList.addItem('Item 5');
+// todoList.addItem('Item 6');
+// todoList.selectItem(0).editProject('Projeto 1');
+// todoList.selectItem(1).editProject('Projeção');
+// todoList.selectItem(2).editProject('Projota');
+// todoList.selectItem(2).addNote(`
+//   <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element.
+//   These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables.
+//   It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+// `);
+const allItems = todoList.allTasksList(0);
+allItems.forEach((obj) => addLine(obj, allItems.indexOf(obj)));

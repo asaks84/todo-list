@@ -1,6 +1,16 @@
 import todoList from './core';
 // import addLine from './uiListGenerator';
 
+export function populateStorage() {
+  localStorage.setItem('data', todoList.toJSON());
+  console.log('populate');
+}
+
+export function restoreStorage() {
+  if (localStorage.getItem('data') === null) return;
+  todoList.restore(localStorage.getItem('data'));
+}
+
 export async function connect() {
   const requestURL = './assets/data.json';
   const request = await fetch(requestURL);

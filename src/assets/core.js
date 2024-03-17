@@ -6,38 +6,20 @@ function CreateItem(text, deadline = 0, project = null, priorityNum = 0) {
   let checked = false;
   const notes = [];
 
-  function editTitle(val) {
-    title = val;
-  }
+  function editTitle(val) { title = val; }
   const getTitle = () => title;
-  function editPriority(val) {
-    priority = val;
-  }
+  function editPriority(val) { priority = val; }
   const getPriority = () => priority;
-  function deleteDuoDate() {
-    dueDate = 0;
-  }
-  function editDueDate(val) {
-    dueDate = val;
-  }
+  function deleteDuoDate() { dueDate = 0; }
+  function editDueDate(val) { dueDate = val; }
   const getDueDate = () => dueDate;
-  function editProject(val) {
-    projectName = val;
-  }
+  function editProject(val) { projectName = val; }
   const getProject = () => projectName;
-  function editCheck() {
-    checked = !checked;
-  }
+  function editCheck() { checked = !checked; }
   const getCheck = () => checked;
-  function addNote(val) {
-    notes.push(val);
-  }
-  function deleteNote(pos) {
-    notes.splice(pos, 1);
-  }
-  function editNote(pos, val) {
-    notes[pos] = val;
-  }
+  function addNote(val) { notes.push(val); }
+  function deleteNote(pos) { notes.splice(pos, 1); }
+  function editNote(pos, val) { notes[pos] = val; }
   const getAllNotes = () => notes;
   const getNote = (pos) => notes[pos];
 
@@ -87,6 +69,19 @@ const todoList = (() => {
   function addItem(text, deadline, project, priority) {
     const newItem = CreateItem(text, deadline, project, priority);
     list.push(newItem);
+  }
+
+  function returnObj(item) {
+    const title = item.getTitle();
+    const project = item.getProject();
+    const dueDate = item.getDueDate();
+    const priority = item.getPriority();
+    const checked = item.getCheck();
+    const notes = item.getAllNotes();
+
+    return {
+      title, project, dueDate, priority, checked, notes,
+    };
   }
 
   const toJSON = () => {
@@ -142,18 +137,12 @@ const todoList = (() => {
     const removed = list.splice(pos, 1);
     return complete.push(removed[0]);
   }
-
-  // ############
-  // CONSOLE LOG
-  // ############
-
-  // function readLog() {
-  //   for (let i = 0; i < list.length; i += 1) {
-  //     console.log(`${list[i].getTitle()}`);
-  //   }
-  //   console.log(`Tasks done: ${getLength(complete)}
-  //   `);
-  // }
+  function allTasksList(num) {
+    if (num === 0) {
+      return list.map((obj) => (returnObj(obj)));
+    }
+    return complete.map((obj) => (returnObj(obj)));
+  }
 
   return {
     getLength,
@@ -164,6 +153,8 @@ const todoList = (() => {
     setChecked,
     getProjects,
     reset,
+    returnObj,
+    allTasksList,
   };
 })();
 
