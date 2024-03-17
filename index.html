@@ -31,52 +31,55 @@
       </nav>
     </aside>
     <main class="col">
-      <!-- 
-          TELA DA HOME
+
+      <!-- TELA DA HOME  -->
       <div class="row">
         <div class="input-group mb-3 gap-1 ">
           <input id="itemTitle" type="text" class="form-control" placeholder="Nova tarefa">
           <button id="addMore" class="btn btn-outline-warning" title="Adicionar mais informações">+</button>
           <button id="saveItem" class="btn btn-warning text-light">Salvar</button>
         </div>
-      </div> -->
+      </div>
+
+
+
+      <!-- TELA DE EDIÇÃO DA TAREFA -->
       <div class="row">
         <div class="input-group mb-3 gap-1 ">
           <input id="itemTitle" type="text" class="form-control" placeholder="Nova tarefa">
         </div>
       </div>
+
       <div class="bg-gray row g-0 gap-2 flex-nowrap">
-        <div class="date flatpickr col-md-3 col-lg-3">
+        <div class="date flatpickr col">
           <input id="dueDate" class="form-control" type="text" data-input placeholder="" inputmode="numeric">
           <a class="input-button" title="toggle" data-toggle>
             <i class="text-warning small bi bi-calendar"></i>
           </a>
         </div>
 
-        <div class="priority col-md-3 col-lg-3">
+        <div class="priority col">
           <select class="form-select" aria-label="Prioridade">
             <option value="0">Prioridade</option>
-            <option value="1" class="bi bi-calendar">Prioridade 1</option>
+            <option value="1">Prioridade 1</option>
             <option value="2">Prioridade 2</option>
             <option value="3">Prioridade 3</option>
           </select>
         </div>
 
-        <div class="project col-md-4 col-lg-4">
+        <div class="project col">
           <input type="text" class="form-control" list="datalistOptions" id="enterProject" placeholder="Projeto">
           <datalist dropzone="string" id="datalistOptions" class="sugestoes form"></datalist>
         </div>
-        <div class="col-md-2 bg-body">
-          <button id="saveItem" class="btn btn-warning revealItem text-light">Salvar</button>
-        </div>
       </div>
+
       <div class="row pt-2">
-        <h6>Notas</h6>
-        <div class="container">
+        <div class="notes container">
+          <h6>Notas</h6>
           <div class="row g-2">
 
-            <div class="col-6">
-              <div class="py-1 px-2 border border-warning">
+            <div class="col-4">
+              <div class="px-2 border border-warning">
                 <p>Uma nota sobre o item</p>
                 <div class="col flex-row p-0 small">
                   <i class="bi bi-pencil-square"></i>
@@ -86,8 +89,8 @@
               </div>
             </div>
 
-            <div class="col-6">
-              <div class="py-1 px-2 border border-warning">
+            <div class="col-4">
+              <div class="px-2 border border-warning">
                 <p>Uma nota sobre o item</p>
                 <div class="col flex-row p-0 small">
                   <i class="bi bi-pencil-square"></i>
@@ -97,8 +100,8 @@
               </div>
             </div>
 
-            <div class="col-6">
-              <div class="py-1 px-2 border border-warning">
+            <div class="col-4">
+              <div class="px-2 border border-warning">
                 <p>Uma nota sobre o item</p>
                 <div class="col flex-row p-0 small">
                   <i class="bi bi-pencil-square"></i>
@@ -108,9 +111,8 @@
               </div>
             </div>
 
-
-            <div class="col-6">
-              <div class="py-1 px-2 border border-warning">
+            <div class="col-4">
+              <div class="px-2 border border-warning">
                 <p>Uma nota sobre o item</p>
                 <div class="col flex-row p-0 small">
                   <i class="bi bi-pencil-square"></i>
@@ -120,63 +122,39 @@
               </div>
             </div>
 
-            <div class="col-6">
-              <div class="py-1 px-2 border border-warning">
+            <div class="col-4">
+              <div class="px-2 border border-warning">
                 <p>Uma nota sobre o item</p>
                 <div class="col flex-row p-0 small">
                   <i class="bi bi-pencil-square"></i>
                   <span>Editar</span>
                   <i class=""></i>
                 </div>
+              </div>
+            </div>
+
+            <div class="row pt-2 justify-content-end">
+              <div class="col-auto small text-danger text-warning-emphasis">
+                <a id="addNote">
+                  <i class="bi-plus-circle"></i>
+                  <span>Nova nota</span>
+                </a>
               </div>
             </div>
           </div>
+
+          <div class="row g-2 pt-3 justify-content-start flex-row-reverse">
+            <div class="col-auto">
+              <button id="saveItem" class="btn btn-warning revealItem text-light">Salvar</button>
+            </div>
+            <div class="col-auto">
+              <button id="cancelItem" class="btn btn-secondary revealItem text-light">Cancelar</button>
+            </div>
+          </div>
+
         </div>
-        <!-- <div class="container">
-          <div class="row g-2">
-
-            <div class="note border border-warning rounded col-6">
-              <div class="p-2">AAAA</div>
-              
-              <p>Uma nota sobre o item</p>
-              <div class="col flex-row p-1 pb-0 small">
-                <i class="bi bi-pencil-square"></i>
-                <span>Editar</span>
-                <i class=""></i>
-              </div> 
-            </div>
-            <div class="note border border-warning rounded col-6">
-              <p>Uma nota sobre o item</p>
-            </div>
-            <div class="note border border-warning rounded col-3">
-              aaa
-            </div>
-            <div class="note border border-warning rounded col-3">
-              aaa
-            </div>
-            <div class="note border border-warning rounded col-3">
-              <p>Uma nota sobre o item</p>
-            </div>
-            <div class="note border border-warning rounded col-3">
-              <p>Uma nota sobre o item</p>
-            </div>
-            <div class="note border border-warning rounded col-3">
-              <p>Uma nota sobre o item</p>
-            </div>
-            <div class="note border border-warning rounded col-3">
-              <p>Uma nota sobre o item</p>
-            </div>
-            <div class="note border border-warning rounded col-3">
-              <p>Uma nota sobre o item</p>
-            </div>
-            <div class="note border border-warning rounded col-3">
-              <p>Uma nota sobre o item</p>
-            </div>
-          </div>
-        </div> -->
       </div>
       <div class="accordion" id="list"></div>
-
 
     </main>
   </div>
