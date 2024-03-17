@@ -34,6 +34,13 @@ a {
 .btn-outline-warning:hover {
   color: white;
 }
+.accordion-button::after {
+  width: 0.75rem;
+  height: 0.75rem;
+  background-size: .75rem;
+  position: absolute;
+  right: 0;
+}
 
 div.date {
   $spacing: 2rem;
@@ -132,6 +139,7 @@ input[type="checkbox"]:focus {
   box-shadow: none;
 }
 
+.accordion-button:focus,
 textarea:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,

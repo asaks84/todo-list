@@ -3,8 +3,9 @@ import './style.scss';
 import todoList from './core';
 import addLine from './uiListGenerator';
 import { populateStorage, restoreStorage } from './JSONFunctions';
+import { dueDateMask, searchProjects } from './uiFunctions';
 
-const input = document.querySelector('input');
+const input = document.querySelectorAll('input');
 const addField = document.querySelector('input#itemTitle');
 
 // Enquanto escreve o título, ele mostra um botão para adicionar mais opções, se assim desejar
@@ -30,8 +31,10 @@ function showPlusBtn() {
 addField.addEventListener('keydown', showPlusBtn);
 addField.addEventListener('keyup', showPlusBtn);
 
-input.addEventListener('change', populateStorage);
-input.setAttribute('autocomplete', 'off');
+input.forEach((e) => e.addEventListener('change', populateStorage));
+input.forEach((e) => e.setAttribute('autocomplete', 'off'));
+// input.addEventListener('change', populateStorage);
+// input.setAttribute('autocomplete', 'off');
 window.onload = restoreStorage();
 
 // tests
@@ -49,5 +52,9 @@ window.onload = restoreStorage();
 //   These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables.
 //   It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
 // `);
+
+dueDateMask();
+searchProjects();
+
 const allItems = todoList.allTasksList(0);
 allItems.forEach((obj) => addLine(obj, allItems.indexOf(obj)));
