@@ -1,9 +1,9 @@
-function CreateItem(text, deadline = 0, project = null, priorityNum = 0) {
+function CreateItem(text, deadline = 0, project = null, priorityNum = 0, check = false) {
   let title = text;
   let dueDate = deadline;
   let projectName = project;
   let priority = priorityNum;
-  let checked = false;
+  let checked = check;
   const notes = [];
 
   function editTitle(val) { title = val; }
@@ -50,26 +50,6 @@ function CreateItem(text, deadline = 0, project = null, priorityNum = 0) {
 
 const todoList = (() => {
   const list = [];
-  const complete = [];
-
-  const getLength = (data = list) => {
-    if (typeof data === 'number') {
-      return complete.length;
-    }
-    return data.length;
-  };
-  const selectItem = (pos, arr = list) => arr[pos];
-  const getProjects = () => list.map((item) => item.getProject())
-    .filter((value) => value !== null);
-
-  function reset() {
-    list.length = 0;
-    complete.length = 0;
-  }
-  function addItem(text, deadline, project, priority) {
-    const newItem = CreateItem(text, deadline, project, priority);
-    list.push(newItem);
-  }
 
   function returnObj(item) {
     const title = item.getTitle();
@@ -84,6 +64,21 @@ const todoList = (() => {
     };
   }
 
+  const getLength = () => list.length;
+  const selectItem = (pos) => list[pos];
+  function setChecked(pos) { list[pos].editCheck(); }
+  const allTasksList = () => list.map((obj) => (returnObj(obj)));
+  function reset() { list.length = 0; }
+
+  const getProjects = () => list.map((item) => item.getProject())
+    .filter((value) => value !== null)
+    .filter((val, pos) => list.indexOf(val) === pos);
+
+  function addItem(text, deadline, project, priority, checked) {
+    const newItem = CreateItem(text, deadline, project, priority, checked);
+    list.push(newItem);
+  }
+
   const toJSON = () => {
     const listData = list.map((item) => ({
       title: item.getTitle(),
@@ -94,55 +89,22 @@ const todoList = (() => {
       notes: item.getAllNotes(),
     }));
 
-    const completeData = complete.map((item) => ({
-      title: item.getTitle(),
-      project: item.getProject(),
-      dueDate: item.getDueDate(),
-      priority: item.getPriority(),
-      checked: item.getCheck(),
-      notes: item.getAllNotes(),
-    }));
-
-    return JSON.stringify({ list: listData, complete: completeData }, '', 1);
+    return JSON.stringify({ list: listData }, '', 1);
   };
 
   const restore = (data) => {
     reset();
-    const { list: listData, complete: completeData } = JSON.parse(data);
-
+    const { list: listData } = JSON.parse(data);
     listData.forEach(
       ({
-        title, project, dueDate, priority, notes,
+        title, project, dueDate, priority, checked, notes,
       }) => {
-        const newItem = CreateItem(title, dueDate, project, priority);
+        const newItem = CreateItem(title, dueDate, project, priority, checked);
         notes.forEach((note) => newItem.addNote(note));
         list.push(newItem);
       },
     );
-
-    completeData.forEach(
-      ({
-        title, project, dueDate, priority, notes,
-      }) => {
-        const newItem = CreateItem(title, dueDate, project, priority);
-        newItem.editCheck();
-        notes.forEach((note) => newItem.addNote(note));
-        complete.push(newItem);
-      },
-    );
   };
-
-  function setChecked(pos) {
-    list[pos].editCheck();
-    const removed = list.splice(pos, 1);
-    return complete.push(removed[0]);
-  }
-  function allTasksList(num) {
-    if (num === 0) {
-      return list.map((obj) => (returnObj(obj)));
-    }
-    return complete.map((obj) => (returnObj(obj)));
-  }
 
   return {
     getLength,

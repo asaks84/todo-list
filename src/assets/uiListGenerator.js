@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { populateStorage } from './JSONFunctions';
 import { setAttrs } from './uiFunctions';
 
@@ -13,6 +14,11 @@ function setChecked(e) {
   } else {
     text.classList.remove('text-decoration-line-through');
   }
+}
+
+function addChecked(checkbox, button) {
+  checkbox.checked = true;
+  button.classList.add('text-decoration-line-through');
 }
 
 function insertNote(notes, body) {
@@ -45,7 +51,7 @@ function addLine(obj, num) {
 
   // header
   checkbox.setAttribute('type', 'checkbox');
-  checkbox.classList.add('form-check-input');
+  checkbox.classList.add('form-check-input', 'text-bg-warning');
   checkbox.addEventListener('change', setChecked);
   checkbox.addEventListener('change', populateStorage);
 
@@ -100,5 +106,7 @@ function addLine(obj, num) {
   item.appendChild(itemDetails);
 
   list.appendChild(item);
+
+  if (isChecked(obj)) addChecked(checkbox, btnHeader);
 }
 export default addLine;

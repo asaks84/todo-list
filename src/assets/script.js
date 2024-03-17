@@ -41,9 +41,9 @@ window.onload = restoreStorage();
 
 // filtering special characters
 
-// todoList.addItem('Item 4');
-// todoList.addItem('Item 5');
-// todoList.addItem('Item 6');
+todoList.addItem('Item 1');
+todoList.addItem('Item 2');
+todoList.addItem('Item 3');
 // todoList.selectItem(0).editProject('Projeto 1');
 // todoList.selectItem(1).editProject('Projeção');
 // todoList.selectItem(2).editProject('Projota');
@@ -53,8 +53,15 @@ window.onload = restoreStorage();
 //   It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
 // `);
 
+// todoList.setChecked(2);
+
 dueDateMask();
 searchProjects();
 
-const allItems = todoList.allTasksList(0);
-allItems.forEach((obj) => addLine(obj, allItems.indexOf(obj)));
+function loadList() {
+  const allItems = todoList.allTasksList();
+  const uiList = [...allItems];
+  uiList.sort((a, b) => ((a.checked < b.checked) ? -1 : 1));
+  uiList.forEach((obj) => addLine(obj, allItems.indexOf(obj)));
+}
+loadList();
