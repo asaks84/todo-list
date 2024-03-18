@@ -1,20 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { populateStorage } from './JSONFunctions';
-import { setAttrs } from './uiFunctions';
+import { setAttrs, isChecked, setChecked } from './uiFunctions';
 
 const list = document.querySelector('div#list');
-const isChecked = (e) => e.checked === true;
 const hasNotes = (obj) => obj.length > 0;
-
-function setChecked(e) {
-  const { target } = e;
-  const text = target.nextElementSibling;
-  if (isChecked(target)) {
-    text.classList.add('text-decoration-line-through');
-  } else {
-    text.classList.remove('text-decoration-line-through');
-  }
-}
 
 function addChecked(checkbox, button) {
   checkbox.checked = true;

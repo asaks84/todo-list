@@ -10,7 +10,19 @@ export function setAttrs(elem, attrs) {
   });
 }
 
-// ADD/EDIT NEW TASK SCREEN
+export const isChecked = (e) => e.checked === true;
+
+export function setChecked(e) {
+  const { target } = e;
+  const text = target.nextElementSibling;
+  if (isChecked(target)) {
+    text.classList.add('text-decoration-line-through');
+  } else {
+    text.classList.remove('text-decoration-line-through');
+  }
+}
+
+// ADD/EDIT NEW TASK SCREEN FUNCTIONS
 
 function removeSpecials(text) {
   let search = text;
@@ -75,4 +87,11 @@ export function dueDateMask() {
       mask.updateValue(dateStr);
     },
   });
+
+  // dueDate.addEventListener('focus', () => {
+  //   mask.updateOptions({ lazy: false });
+  // });
+  // dueDate.addEventListener('blur', () => {
+  //   mask.updateOptions({ lazy: true });
+  // });
 }

@@ -71,8 +71,7 @@ const todoList = (() => {
   function reset() { list.length = 0; }
 
   const getProjects = () => list.map((item) => item.getProject())
-    .filter((value) => value !== null)
-    .filter((val, pos) => list.indexOf(val) === pos);
+    .filter((value, pos, self) => value !== null && self.indexOf(value) === pos);
 
   function addItem(text, deadline, project, priority, checked) {
     const newItem = CreateItem(text, deadline, project, priority, checked);

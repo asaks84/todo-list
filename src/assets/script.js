@@ -41,9 +41,6 @@ window.onload = restoreStorage();
 
 // filtering special characters
 
-todoList.addItem('Item 1');
-todoList.addItem('Item 2');
-todoList.addItem('Item 3');
 // todoList.selectItem(0).editProject('Projeto 1');
 // todoList.selectItem(1).editProject('Projeção');
 // todoList.selectItem(2).editProject('Projota');
@@ -54,6 +51,7 @@ todoList.addItem('Item 3');
 // `);
 
 // todoList.setChecked(2);
+todoList.selectItem(4).editProject('Projota');
 
 dueDateMask();
 searchProjects();
