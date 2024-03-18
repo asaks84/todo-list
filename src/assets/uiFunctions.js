@@ -6,8 +6,37 @@ import todoList from './core';
 
 export function setAttrs(elem, attrs) {
   Object.keys(attrs).forEach((key) => {
-    elem.setAttribute(key, attrs[key]);
+    if (key !== undefined) elem.setAttribute(key, attrs[key]);
+    else elem.setAttribute(key);
   });
+}
+export function createElement(tag, classNames = [], attributes = {}) {
+  const element = document.createElement(tag);
+  element.classList.add(...classNames);
+  setAttrs(element, attributes);
+  return element;
+}
+
+export function createOption(value, text, selected = false) {
+  const option = createElement('option', [], { value });
+  option.textContent = text;
+  if (selected) {
+    option.setAttribute('selected', 'selected');
+  }
+  return option;
+}
+
+export function createPrioritySelect() {
+  const select = createElement('select', ['form-select'], {
+    'aria-label': 'Prioridade',
+  });
+  for (let i = 0; i < 4; i += 1) {
+    const text = i === 0 ? 'Prioridade' : `Prioridade ${i}`;
+    const selected = i === 0;
+    const option = createOption(i, text, selected);
+    select.appendChild(option);
+  }
+  return select;
 }
 
 export const isChecked = (e) => e.checked === true;
@@ -87,11 +116,4 @@ export function dueDateMask() {
       mask.updateValue(dateStr);
     },
   });
-
-  // dueDate.addEventListener('focus', () => {
-  //   mask.updateOptions({ lazy: false });
-  // });
-  // dueDate.addEventListener('blur', () => {
-  //   mask.updateOptions({ lazy: true });
-  // });
 }

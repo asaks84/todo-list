@@ -1,126 +1,69 @@
-import { setAttrs } from './uiFunctions';
-
+import { createElement, createPrioritySelect } from './uiFunctions';
 /* eslint-disable no-unused-vars */
-const div = document.createElement('div');
-const input = document.createElement('input');
-const btn = document.createElement('button');
-const aIcon = document.createElement('a');
-const icon = document.createElement('i');
-const span = document.createElement('span');
-const select = document.createElement('select');
-const option = document.createElement('option');
-const h6 = document.createElement('h6');
-const datalist = document.createElement('datalist');
 
 function uiEditItem() {
-  // lines
+  // creating elements
+  const row1 = createElement('div', ['row']);
 
-  // element groups
-  const row1 = div; // title
-
-  // Task title
-  const titleDiv = div;
-  const titleInput = input;
-
-  const row2 = div; // dueDate, priority, propject
-
-  // due date
-  const divDate = div;
-  const duedate = input;
-  const aCalendar = aIcon;
-  const iconCalendar = icon;
-
-  // priority
-  const priorityDiv = div;
-  const selectPriority = select;
-  for (let i = 0; i < 4; i += 1) {
-    const priorItem = option;
-    priorItem.setAttribute('value', i);
-    if (i === 0) {
-      priorItem.textContent = 'Prioridade';
-      priorItem.setAttribute('selected');
-    } else { priorItem.textContent = `Prioridade + ${i}`; }
-    selectPriority.appendChild(priorItem);
-  }
-
-  // project
-  const divProject = div;
-  const inputProject = input;
-  const datalistProject = datalist;
-
-  // notes
-  const container = div;
-  const notesHeader = h6;
-
-  const notesGroup = div;
-
-  const row3 = div; // notes list
-
-  // list notes items
-  const noteBlock = div;
-  const noteContent = div;
-  const divEditNote = div;
-  const editLink = aIcon;
-  const editIcon = icon;
-  const editText = span;
-
-  // add new note
-  const addNoteBlock = div;
-  const addNoteContent = div;
-  const addNoteLink = aIcon;
-  const addNoteIcon = icon;
-  const addNoteText = span;
-
-  const row4 = div; // Save and Cancel
-
-  // Buttons
-  const saveBlock = div;
-  const saveBtn = btn;
-  const cancelBlock = div;
-  const cancelBtn = btn;
-
-  // STYLING ITEMS
-
-  row1.classList.add('row');
-  row2.classList.add('row', 'g-0', 'gap-2', 'bg-gray', 'flex-nowrap');
-  row3.classList.add('row', 'pt-2');
-  row4.classList.add('g-2', 'pt-3', 'justify-content-start', 'flex-row-reverse');
-
-  titleDiv.classList.add('input-group', 'mb-3', 'gap-1');
-  titleInput.classList.add('form-control');
-  setAttrs(titleInput, {
+  const titleDiv = createElement('div', ['input-group', 'mb-3', 'gap-1']);
+  const titleInput = createElement('input', ['form-control'], {
     id: 'itemTitle',
     type: 'text',
     placeholder: 'Nova Tarefa...',
   });
 
-  divDate.classList.add('date', 'flatpickr', 'col');
-  duedate.classList.add('form-control');
-  setAttrs(duedate, {
-    id: 'dueDate',
+  const row2 = createElement('div', ['bg-gray', 'row', 'g-0', 'gap-2', 'flex-nowrap']);
+
+  const dateDiv = createElement('div', 'flatpickr', 'col');
+  const dateInput = createElement('div', ['form-control'], {
+    id: 'duedate',
     type: 'text',
     inputmode: 'numeric',
   });
-  duedate.setAttribute('data-input');
-  aCalendar.classList.add('input-button');
-  aCalendar.setAttribute('data-toggle');
-  aCalendar.setAttribute('title', 'toggle');
-  iconCalendar.classList.add('text-warning', 'small', 'bi', 'bi-calendar');
+  const datepickerToggle = createElement('a', ['input-bottom'], {
+    title: 'toggle',
+    'data-toggle': undefined,
+  });
+  const iconDate = createElement('i', ['text-warning', 'small', 'bi', 'bi-calendar']);
 
-  priorityDiv.classList.add('priority', 'col');
-  selectPriority.classList.add('form-select');
-  selectPriority.setAttribute('aria-label', 'Prioridade');
+  const priorityDiv = createElement('div', ['col']);
+  const selectPriority = createPrioritySelect();
 
-  divProject.classList.add('project', 'col');
-  inputProject.classList.add('form-control');
-  setAttrs(inputProject, {
+  const projectDiv = createElement('div', ['col']);
+  const inputProject = createElement('input', ['form-control'], {
     type: 'text',
     list: 'datalistOptions',
     placeholder: 'Projeto',
   });
-  datalistProject.classList.add('suggestions', 'form');
-  setAttrs(datalistProject, {
+  const datalistProject = createElement('datalist', ['suggestions', 'form'], {
     id: 'datalistOptions',
     dropzone: 'string',
   });
+
+  const row3 = createElement('div', ['row', 'pt-2']);
+
+  const notesContainer = createElement('div', ['container']);
+  const notesHeader = createElement('h6');
+  const notesRow = createElement('div', ['row', 'g-2']);
+
+  const row4 = createElement('div', ['row', 'pt-2', 'justify-content-end']);
+  const addNoteDiv = createElement('div', ['col-auto', 'small', 'text-danger', 'text-warning-emphasis']);
+  const addNoteLink = createElement('a', [], { id: 'addNote' });
+  const addNoteIcon = createElement('i', ['bi', 'bi-plus-circle']);
+  const addNoteText = createElement('span');
+
+  const row5 = createElement('div', ['row', 'g-2', 'pt-3', 'justify-content-start', 'flex-row-reverse']);
+
+  const saveDiv = createElement('div', ['col-auto']);
+  const saveBtn = createElement('button', ['btn', 'btn-warning', 'text-light'], {
+    id: 'saveItem',
+    'data-bs-dismiss': 'modal',
+  });
+  const cancelDiv = createElement('div', ['col-auto']);
+  const cancelBtn = createElement('button', ['btn', 'btn-warning', 'text-light'], {
+    id: 'saveItem',
+    'data-bs-dismiss': 'modal',
+  });
 }
+
+export default uiEditItem;
