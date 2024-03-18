@@ -51,7 +51,7 @@ window.onload = restoreStorage();
 // `);
 
 // todoList.setChecked(2);
-todoList.selectItem(4).editProject('Projota');
+// todoList.selectItem(4).editProject('Projota');
 
 dueDateMask();
 searchProjects();
