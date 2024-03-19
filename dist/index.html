@@ -36,7 +36,7 @@
       <div class="row">
         <div class="input-group mb-3 gap-1 ">
           <input id="itemTitle" type="text" class="form-control" placeholder="Nova tarefa">
-          <button id="addMore" data-bs-target="#exampleModal" data-bs-toggle="modal" class="btn btn-outline-warning"
+          <button id="addMore" data-bs-target="#exampleModal" data-bs-toggle="modal" class="addItem btn btn-outline-warning"
             title="Adicionar mais informações">+</button>
           <button id="saveItem" class="btn btn-warning text-light">Salvar</button>
         </div>
@@ -49,118 +49,7 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-body">
-              <!-- ADD/EDIT TASK -->
-            <div class="row">
-              <div class="input-group mb-3 gap-1 ">
-                <input id="itemTitle" type="text" class="form-control" placeholder="Nova tarefa">
-              </div>
-            </div>
 
-            <div class="bg-gray row g-0 gap-2 flex-nowrap">
-              <div class="date flatpickr col">
-                <input id="dueDate" class="form-control" type="text" data-input placeholder="" inputmode="numeric">
-                <a class="input-button" title="toggle" data-toggle>
-                  <i class="text-warning small bi bi-calendar"></i>
-                </a>
-              </div>
-
-              <div class="priority col">
-                <select class="form-select" aria-label="Prioridade">
-                  <option value="0">Prioridade</option>
-                  <option value="1">Prioridade 1</option>
-                  <option value="2">Prioridade 2</option>
-                  <option value="3">Prioridade 3</option>
-                </select>
-              </div>
-
-              <div class="project col">
-                <input type="text" class="form-control" list="datalistOptions" id="enterProject" placeholder="Projeto">
-                <datalist dropzone="string" id="datalistOptions" class="sugestoes form"></datalist>
-              </div>
-            </div>
-
-            <div class="row pt-2">
-              <div class="notes container">
-                <h6>Notas</h6>
-                <div class="row g-2">
-
-                  <div class="col-4">
-                    <div class="px-2 border border-warning">
-                      <p>Uma nota sobre o item</p>
-                      <div class="col flex-row p-0 small">
-                        <i class="bi bi-pencil-square"></i>
-                        <span>Editar</span>
-                        <i class=""></i>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-4">
-                    <div class="px-2 border border-warning">
-                      <p>Uma nota sobre o item</p>
-                      <div class="col flex-row p-0 small">
-                        <i class="bi bi-pencil-square"></i>
-                        <span>Editar</span>
-                        <i class=""></i>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-4">
-                    <div class="px-2 border border-warning">
-                      <p>Uma nota sobre o item</p>
-                      <div class="col flex-row p-0 small">
-                        <i class="bi bi-pencil-square"></i>
-                        <span>Editar</span>
-                        <i class=""></i>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-4">
-                    <div class="px-2 border border-warning">
-                      <p>Uma nota sobre o item</p>
-                      <div class="col flex-row p-0 small">
-                        <i class="bi bi-pencil-square"></i>
-                        <span>Editar</span>
-                        <i class=""></i>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-4">
-                    <div class="px-2 border border-warning">
-                      <p>Uma nota sobre o item</p>
-                      <div class="col flex-row p-0 small">
-                        <i class="bi bi-pencil-square"></i>
-                        <span>Editar</span>
-                        <i class=""></i>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row pt-2 justify-content-end">
-                    <div class="col-auto small text-danger text-warning-emphasis">
-                      <a id="addNote">
-                        <i class="bi-plus-circle"></i>
-                        <span>Nova nota</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row g-2 pt-3 justify-content-start flex-row-reverse">
-                  <div class="col-auto">
-                    <button id="saveItem" class="btn btn-warning revealItem text-light" data-bs-dismiss="modal">Salvar</button>
-                  </div>
-                  <div class="col-auto">
-                    <button id="cancelItem" class="btn btn-secondary revealItem text-light" data-bs-dismiss="modal">Cancelar</button>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <!-- END ADD/EDIT ITEM -->
             </div>
           </div>
         </div>

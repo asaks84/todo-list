@@ -184,6 +184,12 @@ select.form-select:focus,
   background: none;
   color: #424242;
 }
+.btn-outline-warning, .btn-outline-warning:focus,
+.btn-warning, .btn-warning:focus {
+  box-shadow: none;
+  // border: none;
+   outline: none;
+}
 
 .bg-gray {
   & > div {

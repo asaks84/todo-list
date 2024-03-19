@@ -3,10 +3,14 @@ import './style.scss';
 import todoList from './core';
 import addLine from './uiListGenerator';
 import { populateStorage, restoreStorage } from './JSONFunctions';
-import { dueDateMask, searchProjects } from './uiFunctions';
+import uiEditItem from './uiAddItemConstructor';
+import { clearContent } from './uiFunctions';
 
 const input = document.querySelectorAll('input');
 const addField = document.querySelector('input#itemTitle');
+const addTask = document.querySelector('a#addItem');
+
+addTask.addEventListener('click', uiEditItem);
 
 // Enquanto escreve o título, ele mostra um botão para adicionar mais opções, se assim desejar
 function showPlusBtn() {
@@ -53,9 +57,6 @@ window.onload = restoreStorage();
 // todoList.setChecked(2);
 // todoList.selectItem(4).editProject('Projota');
 
-dueDateMask();
-searchProjects();
-
 function loadList() {
   const allItems = todoList.allTasksList();
   const uiList = [...allItems];
@@ -63,3 +64,9 @@ function loadList() {
   uiList.forEach((obj) => addLine(obj, allItems.indexOf(obj)));
 }
 loadList();
+
+const mainModal = document.querySelector('div#exampleModal');
+mainModal.addEventListener('hidden.bs.modal', () => {
+  const modalBody = mainModal.querySelector('.modal-body');
+  clearContent(modalBody);
+});

@@ -4,15 +4,38 @@ import IMask from 'imask';
 import { maskDate } from './date';
 import todoList from './core';
 
+const specialCharsEntries = [
+  ['ÀÁÂÃÄÅ', 'A'],
+  ['àáâãäå', 'a'],
+  ['ÈÉÊË', 'E'],
+  ['èéêë', 'e'],
+  ['ÌÍÎÏ', 'I'],
+  ['ìíîï', 'i'],
+  ['ÒÓÕÔÖ', 'O'],
+  ['òóõôö', 'o'],
+  ['ÙÚÛÜ', 'U'],
+  ['ùúûü', 'u'],
+  ['Ç', 'C'],
+  ['ç', 'c'],
+];
+
+const specialCharsMap = Object.fromEntries(
+  specialCharsEntries.flatMap(([chars, value]) => [...chars].map((char) => [char, value])),
+);
+
 export function setAttrs(elem, attrs) {
   Object.keys(attrs).forEach((key) => {
-    if (key !== undefined) elem.setAttribute(key, attrs[key]);
-    else elem.setAttribute(key);
+    if (key !== undefined && attrs[key] !== undefined) {
+      elem.setAttribute(key, attrs[key]);
+    } else {
+      elem.setAttribute(key, '');
+    }
   });
 }
+
 export function createElement(tag, classNames = [], attributes = {}) {
   const element = document.createElement(tag);
-  element.classList.add(...classNames);
+  if (classNames.length) element.classList.add(...classNames);
   setAttrs(element, attributes);
   return element;
 }
@@ -24,6 +47,12 @@ export function createOption(value, text, selected = false) {
     option.setAttribute('selected', 'selected');
   }
   return option;
+}
+
+export function clearContent(elem) {
+  while (elem.firstChild) {
+    elem.removeChild(elem.lastChild);
+  }
 }
 
 export function createPrioritySelect() {
@@ -55,18 +84,10 @@ export function setChecked(e) {
 
 function removeSpecials(text) {
   let search = text;
-  search = search.replace(/[ÀÁÂÃÄÅ]/, 'A');
-  search = search.replace(/[àáâãäå]/, 'a');
-  search = search.replace(/[ÈÉÊË]/, 'E');
-  search = search.replace(/[èéêë]/, 'e');
-  search = search.replace(/[ÌÍÏÎ]/, 'I');
-  search = search.replace(/[ìíïî]/, 'i');
-  search = search.replace(/[ÒÓÕÔÖ]/, 'O');
-  search = search.replace(/[òóõôö]/, 'o');
-  search = search.replace(/[ÙÚÛÜ]/, 'O');
-  search = search.replace(/[ùúûü]/, 'u');
-  search = search.replace(/[Ç]/, 'C');
-  search = search.replace(/[ç]/, 'c');
+  search = search.replace(
+    /[À-Üà-ü]/g,
+    (match) => specialCharsMap[match] || match,
+  );
   return search;
 }
 // projects datalist autocomplete
