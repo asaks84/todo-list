@@ -1,35 +1,21 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import './style.scss';
 import todoList from './core';
-import addLine from './uiListGenerator';
 import { populateStorage, restoreStorage } from './JSONFunctions';
 import uiEditItem from './uiAddItemConstructor';
-import { clearContent } from './uiFunctions';
+import { uiControl } from './uiControls';
+import {
+  clearContent,
+  showPlusBtn,
+  addField,
+} from './uiFunctions';
 
 const input = document.querySelectorAll('input');
-const addField = document.querySelector('input#itemTitle');
 const addTask = document.querySelector('a#addItem');
 
 addTask.addEventListener('click', uiEditItem);
 
-// Enquanto escreve o título, ele mostra um botão para adicionar mais opções, se assim desejar
-function showPlusBtn() {
-  // Encontra o botão +
-  const plusBtn = addField.nextElementSibling;
-  const saveBtn = plusBtn.nextElementSibling;
-  // Se o valor do campo título for diferente de vazio,
-  // então ele revela o botão +
-  if (addField.value !== '') {
-    plusBtn.classList.add('revealItem');
-    saveBtn.classList.add('revealItem');
-  }
-  // caso contrário, se você apagar todo o título
-  // ele dá display: none, no botão +
-  if (addField.value === '' && plusBtn.classList.contains('revealItem')) {
-    plusBtn.classList.remove('revealItem');
-    saveBtn.classList.remove('revealItem');
-  }
-}
 // adiciona evento pra quando se começa a digitar
 // e quando se para de digitar o título do item.
 addField.addEventListener('keydown', showPlusBtn);
@@ -41,10 +27,18 @@ input.forEach((e) => e.setAttribute('autocomplete', 'off'));
 // input.setAttribute('autocomplete', 'off');
 window.onload = restoreStorage();
 
+const mainModal = document.querySelector('div#exampleModal');
+mainModal.addEventListener('hidden.bs.modal', () => {
+  const modalBody = mainModal.querySelector('.modal-body');
+  clearContent(modalBody);
+});
+
 // tests
-
-// filtering special characters
-
+// console.log(todoList.getLength());
+// todoList.addItem('Item 1');
+// todoList.addItem('item 2');
+// todoList.addItem('item 3');
+// todoList.addItem('Item 4');
 // todoList.selectItem(0).editProject('Projeto 1');
 // todoList.selectItem(1).editProject('Projeção');
 // todoList.selectItem(2).editProject('Projota');
@@ -56,17 +50,4 @@ window.onload = restoreStorage();
 
 // todoList.setChecked(2);
 // todoList.selectItem(4).editProject('Projota');
-
-function loadList() {
-  const allItems = todoList.allTasksList();
-  const uiList = [...allItems];
-  uiList.sort((a, b) => ((a.checked < b.checked) ? -1 : 1));
-  uiList.forEach((obj) => addLine(obj, allItems.indexOf(obj)));
-}
-loadList();
-
-const mainModal = document.querySelector('div#exampleModal');
-mainModal.addEventListener('hidden.bs.modal', () => {
-  const modalBody = mainModal.querySelector('.modal-body');
-  clearContent(modalBody);
-});
+uiControl.load();

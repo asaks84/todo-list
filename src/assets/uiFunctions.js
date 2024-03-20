@@ -4,6 +4,10 @@ import IMask from 'imask';
 import { maskDate } from './date';
 import todoList from './core';
 
+export const isChecked = (e) => e.checked === true;
+
+// start onLoad
+
 const specialCharsEntries = [
   ['ÀÁÂÃÄÅ', 'A'],
   ['àáâãäå', 'a'],
@@ -68,18 +72,6 @@ export function createPrioritySelect() {
   return select;
 }
 
-export const isChecked = (e) => e.checked === true;
-
-export function setChecked(e) {
-  const { target } = e;
-  const text = target.nextElementSibling;
-  if (isChecked(target)) {
-    text.classList.add('text-decoration-line-through');
-  } else {
-    text.classList.remove('text-decoration-line-through');
-  }
-}
-
 // ADD/EDIT NEW TASK SCREEN FUNCTIONS
 
 function removeSpecials(text) {
@@ -137,4 +129,35 @@ export function dueDateMask() {
       mask.updateValue(dateStr);
     },
   });
+}
+
+// main screen interactions
+// check visual effect
+export function setLineThrough(e) {
+  const text = e.nextElementSibling;
+  if (isChecked(e)) {
+    text.classList.add('text-decoration-line-through');
+  } else {
+    text.classList.remove('text-decoration-line-through');
+  }
+}
+
+export const addField = document.querySelector('input#itemTitle');
+
+export function showPlusBtn() {
+  // Encontra o botão +
+  const plusBtn = addField.nextElementSibling;
+  const saveBtn = plusBtn.nextElementSibling;
+  // Se o valor do campo título for diferente de vazio,
+  // então ele revela o botão +
+  if (addField.value !== '') {
+    plusBtn.classList.add('revealItem');
+    saveBtn.classList.add('revealItem');
+  }
+  // caso contrário, se você apagar todo o título
+  // ele dá display: none, no botão +
+  if (addField.value === '' && plusBtn.classList.contains('revealItem')) {
+    plusBtn.classList.remove('revealItem');
+    saveBtn.classList.remove('revealItem');
+  }
 }

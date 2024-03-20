@@ -3,7 +3,6 @@ import {
   searchProjects,
   createElement,
   createPrioritySelect,
-  clearModal,
 } from './uiFunctions';
 /* eslint-disable no-unused-vars */
 
@@ -108,8 +107,6 @@ function uiEditItem() {
   row3.appendChild(notesContainer);
 
   // row4 (buttons)
-  saveBtn.addEventListener('click', clearModal);
-  cancelBtn.addEventListener('click', clearModal);
   cancelBtn.textContent = 'Cancel';
   saveBtn.textContent = 'Save';
   saveDiv.appendChild(saveBtn);

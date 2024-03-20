@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { populateStorage } from './JSONFunctions';
-import { isChecked, setChecked, createElement } from './uiFunctions';
+import { isChecked, createElement } from './uiFunctions';
+// eslint-disable-next-line import/no-cycle
+import { setChecked } from './uiControls';
 
 const list = document.querySelector('div#list');
 const hasNotes = (obj) => obj.length > 0;

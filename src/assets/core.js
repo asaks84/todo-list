@@ -1,9 +1,10 @@
-function CreateItem(text, deadline = 0, project = null, priorityNum = 0, check = false) {
+function CreateItem(num, text, deadline = 0, project = null, priorityNum = 0, check = false) {
   let title = text;
   let dueDate = deadline;
   let projectName = project;
   let priority = priorityNum;
   let checked = check;
+  const id = num;
   const notes = [];
 
   function editTitle(val) { title = val; }
@@ -22,6 +23,7 @@ function CreateItem(text, deadline = 0, project = null, priorityNum = 0, check =
   function editNote(pos, val) { notes[pos] = val; }
   const getAllNotes = () => notes;
   const getNote = (pos) => notes[pos];
+  const getId = () => id;
 
   return {
     addNote,
@@ -45,6 +47,8 @@ function CreateItem(text, deadline = 0, project = null, priorityNum = 0, check =
 
     editCheck,
     getCheck,
+
+    getId,
   };
 }
 
@@ -52,6 +56,7 @@ const todoList = (() => {
   const list = [];
 
   function returnObj(item) {
+    const id = item.getId();
     const title = item.getTitle();
     const project = item.getProject();
     const dueDate = item.getDueDate();
@@ -60,7 +65,7 @@ const todoList = (() => {
     const notes = item.getAllNotes();
 
     return {
-      title, project, dueDate, priority, checked, notes,
+      id, title, project, dueDate, priority, checked, notes,
     };
   }
 
@@ -74,12 +79,14 @@ const todoList = (() => {
     .filter((value, pos, self) => value !== null && self.indexOf(value) === pos);
 
   function addItem(text, deadline, project, priority, checked) {
-    const newItem = CreateItem(text, deadline, project, priority, checked);
+    const id = list.length;
+    const newItem = CreateItem(id, text, deadline, project, priority, checked);
     list.push(newItem);
   }
 
   const toJSON = () => {
     const listData = list.map((item) => ({
+      id: item.getId(),
       title: item.getTitle(),
       project: item.getProject(),
       dueDate: item.getDueDate(),
@@ -96,9 +103,9 @@ const todoList = (() => {
     const { list: listData } = JSON.parse(data);
     listData.forEach(
       ({
-        title, project, dueDate, priority, checked, notes,
+        id, title, project, dueDate, priority, checked, notes,
       }) => {
-        const newItem = CreateItem(title, dueDate, project, priority, checked);
+        const newItem = CreateItem(id, title, dueDate, project, priority, checked);
         notes.forEach((note) => newItem.addNote(note));
         list.push(newItem);
       },
