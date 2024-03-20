@@ -6,6 +6,19 @@ import todoList from './core';
 
 export const isChecked = (e) => e.checked === true;
 
+export function findParentNode(element, attributeName) {
+  let { parentNode } = element;
+
+  while (parentNode) {
+    if (parentNode.hasAttribute(attributeName)) {
+      return parentNode;
+    }
+    parentNode = parentNode.parentNode;
+  }
+
+  return null; // Retorna null se não encontrou nenhum nó pai com o atributo desejado
+}
+
 // start onLoad
 
 const specialCharsEntries = [
@@ -59,13 +72,13 @@ export function clearContent(elem) {
   }
 }
 
-export function createPrioritySelect() {
+export function createPrioritySelect(num = 0) {
   const select = createElement('select', ['form-select'], {
     'aria-label': 'Prioridade',
   });
   for (let i = 0; i < 4; i += 1) {
     const text = i === 0 ? 'Prioridade' : `Prioridade ${i}`;
-    const selected = i === 0;
+    const selected = i === num;
     const option = createOption(i, text, selected);
     select.appendChild(option);
   }
@@ -143,6 +156,10 @@ export function setLineThrough(e) {
 }
 
 export const addField = document.querySelector('input#itemTitle');
+export const input = document.querySelector('input');
+export const addTask = document.querySelector('a#addItem');
+export const addMore = document.querySelector('button#addMore');
+export const quickSave = document.querySelector('button#saveItem');
 
 export function showPlusBtn() {
   // Encontra o botão +

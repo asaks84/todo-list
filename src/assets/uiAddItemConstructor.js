@@ -12,7 +12,7 @@ function save(title, dueDate, priority, project) {
   todoList.addItem(title.value, dueDate.value, priority.value, project.value);
   uiControl.update();
 }
-function uiEditItem() {
+function uiEditItem(title, dueDate, priority, project) {
   const modal = document.querySelector('div.modal-body');
   // creating elements
   const row1 = createElement('div', ['row']);
@@ -39,7 +39,9 @@ function uiEditItem() {
   const dateIcon = createElement('i', ['text-warning', 'small', 'bi', 'bi-calendar']);
 
   const priorityDiv = createElement('div', ['col']);
-  const selectPriority = createPrioritySelect();
+  const selectPriority = (typeof priority !== 'undefined')
+    ? createPrioritySelect(priority)
+    : createPrioritySelect();
 
   const projectDiv = createElement('div', ['col']);
   const projectInput = createElement('input', ['form-control'], {
@@ -81,6 +83,7 @@ function uiEditItem() {
   // append elements
 
   // row 1 (title)
+  if (typeof title.value !== 'undefined') titleInput.value = title.value;
   titleDiv.appendChild(titleInput);
 
   row1.appendChild(titleDiv);
@@ -88,6 +91,7 @@ function uiEditItem() {
   // row 2 (date, priority, project)
 
   // date
+  if (typeof dueDate !== 'undefined' && dueDate !== 0) dateInput.value = dueDate;
   datepickerToggle.appendChild(dateIcon);
   dateDiv.append(dateInput, datepickerToggle);
 
@@ -124,6 +128,11 @@ function uiEditItem() {
   modal.append(row1, row2, row3, row4);
   dueDateMask();
   searchProjects();
+}
+
+export function editMore(title) {
+  uiEditItem(title);
+  title.value = '';
 }
 
 export default uiEditItem;

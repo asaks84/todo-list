@@ -1,5 +1,5 @@
 import todoList from './core';
-import { clearContent, setLineThrough } from './uiFunctions';
+import { clearContent, findParentNode, setLineThrough } from './uiFunctions';
 // eslint-disable-next-line import/no-cycle
 import addLine from './uiListGenerator';
 
@@ -50,17 +50,9 @@ export const uiControl = (() => {
   };
 })();
 
-function findParentNode(element, attributeName) {
-  let { parentNode } = element;
-
-  while (parentNode) {
-    if (parentNode.hasAttribute(attributeName)) {
-      return parentNode;
-    }
-    parentNode = parentNode.parentNode;
-  }
-
-  return null; // Retorna null se não encontrou nenhum nó pai com o atributo desejado
+export function fastSave(title) {
+  todoList.addItem(title.value);
+  uiControl.update();
 }
 
 export function setChecked(e) {

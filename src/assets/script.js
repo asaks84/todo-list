@@ -3,16 +3,17 @@
 import './style.scss';
 import todoList from './core';
 import { populateStorage, restoreStorage } from './JSONFunctions';
-import uiEditItem from './uiAddItemConstructor';
-import { uiControl } from './uiControls';
+import uiEditItem, { editMore } from './uiAddItemConstructor';
+import { fastSave, uiControl } from './uiControls';
 import {
   clearContent,
   showPlusBtn,
   addField,
+  addTask,
+  input,
+  addMore,
+  quickSave,
 } from './uiFunctions';
-
-const input = document.querySelectorAll('input');
-const addTask = document.querySelector('a#addItem');
 
 addTask.addEventListener('click', uiEditItem);
 
@@ -20,9 +21,11 @@ addTask.addEventListener('click', uiEditItem);
 // e quando se para de digitar o título do item.
 addField.addEventListener('keydown', showPlusBtn);
 addField.addEventListener('keyup', showPlusBtn);
+addMore.addEventListener('click', () => editMore(input));
+quickSave.addEventListener('click', () => fastSave(input));
 
-input.forEach((e) => e.addEventListener('change', populateStorage));
-input.forEach((e) => e.setAttribute('autocomplete', 'off'));
+input.addEventListener('change', populateStorage);
+input.setAttribute('autocomplete', 'off');
 // input.addEventListener('change', populateStorage);
 // input.setAttribute('autocomplete', 'off');
 window.onload = restoreStorage();
