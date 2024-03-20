@@ -1,3 +1,5 @@
+import todoList from './core';
+import { uiControl } from './uiControls';
 import {
   dueDateMask,
   searchProjects,
@@ -6,6 +8,10 @@ import {
 } from './uiFunctions';
 /* eslint-disable no-unused-vars */
 
+function save(title, dueDate, priority, project) {
+  todoList.addItem(title.value, dueDate.value, priority.value, project.value);
+  uiControl.update();
+}
 function uiEditItem() {
   const modal = document.querySelector('div.modal-body');
   // creating elements
@@ -109,6 +115,7 @@ function uiEditItem() {
   // row4 (buttons)
   cancelBtn.textContent = 'Cancel';
   saveBtn.textContent = 'Save';
+  saveBtn.addEventListener('click', () => save(titleInput, dateInput, projectInput, projectInput));
   saveDiv.appendChild(saveBtn);
   cancelDiv.appendChild(cancelBtn);
 

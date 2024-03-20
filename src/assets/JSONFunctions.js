@@ -3,7 +3,6 @@ import todoList from './core';
 
 export function populateStorage() {
   localStorage.setItem('data', todoList.toJSON());
-  console.log('populate');
 }
 
 export function restoreStorage() {
