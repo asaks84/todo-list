@@ -1,12 +1,11 @@
 import todoList from './core';
-import { uiControl } from './uiControls';
+import uiControl from './uiControls';
 import {
   dueDateMask,
   searchProjects,
   createElement,
   createPrioritySelect,
 } from './uiFunctions';
-/* eslint-disable no-unused-vars */
 
 function save(title, dueDate, priority, project) {
   todoList.addItem(title.value, dueDate.value, priority.value, project.value);
@@ -99,6 +98,7 @@ function uiEditItem(title, dueDate, priority, project) {
   priorityDiv.appendChild(selectPriority);
 
   // project
+  if (typeof project !== 'undefined' && project !== 0) dateInput.value = project;
   projectDiv.append(projectInput, projectDatalist);
 
   row2.append(dateDiv, priorityDiv, projectDiv);
@@ -128,11 +128,6 @@ function uiEditItem(title, dueDate, priority, project) {
   modal.append(row1, row2, row3, row4);
   dueDateMask();
   searchProjects();
-}
-
-export function editMore(title) {
-  uiEditItem(title);
-  title.value = '';
 }
 
 export default uiEditItem;

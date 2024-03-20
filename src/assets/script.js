@@ -3,8 +3,8 @@
 import './style.scss';
 import todoList from './core';
 import { populateStorage, restoreStorage } from './JSONFunctions';
-import uiEditItem, { editMore } from './uiAddItemConstructor';
-import { fastSave, uiControl } from './uiControls';
+import uiEditItem from './uiAddItemConstructor';
+import uiControl from './uiControls';
 import {
   clearContent,
   showPlusBtn,
@@ -14,6 +14,15 @@ import {
   addMore,
   quickSave,
 } from './uiFunctions';
+
+function editMore(title) {
+  uiEditItem(title);
+  title.value = '';
+}
+function fastSave(title) {
+  todoList.addItem(title.value);
+  uiControl.update();
+}
 
 addTask.addEventListener('click', uiEditItem);
 
@@ -36,21 +45,4 @@ mainModal.addEventListener('hidden.bs.modal', () => {
   clearContent(modalBody);
 });
 
-// tests
-// console.log(todoList.getLength());
-// todoList.addItem('Item 1');
-// todoList.addItem('item 2');
-// todoList.addItem('item 3');
-// todoList.addItem('Item 4');
-// todoList.selectItem(0).editProject('Projeto 1');
-// todoList.selectItem(1).editProject('Projeção');
-// todoList.selectItem(2).editProject('Projota');
-// todoList.selectItem(2).addNote(`
-//   <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element.
-//   These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables.
-//   It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-// `);
-
-// todoList.setChecked(2);
-// todoList.selectItem(4).editProject('Projota');
 uiControl.load();

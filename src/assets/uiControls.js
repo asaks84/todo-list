@@ -1,14 +1,13 @@
 import todoList from './core';
-import { clearContent, findParentNode, setLineThrough } from './uiFunctions';
-// eslint-disable-next-line import/no-cycle
+import { clearContent } from './uiFunctions';
 import addLine from './uiListGenerator';
 
-export const loadList = () => [...todoList.allTasksList()];
+const loadList = () => [...todoList.allTasksList()];
 const sortParam = (arr, param) => [...arr]
   .sort((a, b) => ((a[param] < b[param]) ? -1 : 1));
 
 // UI Controller
-export const uiControl = (() => {
+const uiControl = (() => {
   let currentFilter = null;
 
   function setCurrentFilter(key, value) {
@@ -22,6 +21,7 @@ export const uiControl = (() => {
   };
 
   function load() {
+    console.log(loadList());
     const uiList = sortParam(loadList(), 'checked');
     if (currentFilter !== null) {
       filterArray(uiList, currentFilter.key, currentFilter.value)
@@ -50,15 +50,4 @@ export const uiControl = (() => {
   };
 })();
 
-export function fastSave(title) {
-  todoList.addItem(title.value);
-  uiControl.update();
-}
-
-export function setChecked(e) {
-  const { target } = e;
-  const pos = findParentNode(target, 'data-position').getAttribute('data-position');
-  todoList.selectItem(pos).editCheck();
-  setLineThrough(target);
-  uiControl.update();
-}
+export default uiControl;

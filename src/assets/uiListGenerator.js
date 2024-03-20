@@ -1,8 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { populateStorage } from './JSONFunctions';
-import { isChecked, createElement } from './uiFunctions';
-// eslint-disable-next-line import/no-cycle
-import { setChecked } from './uiControls';
+import {
+  isChecked,
+  createElement,
+  findParentNode,
+  setLineThrough,
+} from './uiFunctions';
+import uiControl from './uiControls';
+
+import todoList from './core';
 
 const list = document.querySelector('div#list');
 const hasNotes = (obj) => obj.length > 0;
@@ -18,6 +24,14 @@ function insertNote(notes, body) {
     contentDiv.innerHTML = content;
     body.appendChild(contentDiv);
   });
+}
+
+function setCheckedHandler(e) {
+  const { target } = e;
+  const pos = findParentNode(target, 'data-position').getAttribute('data-position');
+  todoList.selectItem(pos).editCheck();
+  setLineThrough(target);
+  uiControl.update();
 }
 
 function addLine(obj, num) {
@@ -48,7 +62,7 @@ function addLine(obj, num) {
   const btnDelete = createElement('button', ['btn', 'btn-danger']);
 
   // EVENTLISTNERS OBJECTS
-  checkbox.addEventListener('change', setChecked);
+  checkbox.addEventListener('change', setCheckedHandler);
   checkbox.addEventListener('change', populateStorage);
 
   // FILLING CONTENT
