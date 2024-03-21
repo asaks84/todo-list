@@ -1,3 +1,4 @@
+import { populateStorage } from './JSONFunctions';
 import todoList from './core';
 import uiControl from './uiControls';
 import {
@@ -10,6 +11,7 @@ import {
 function save(title, dueDate, priority, project) {
   todoList.addItem(title.value, dueDate.value, priority.value, project.value);
   uiControl.update();
+  populateStorage();
 }
 function uiEditItem(title, dueDate, priority, project) {
   const modal = document.querySelector('div.modal-body');
