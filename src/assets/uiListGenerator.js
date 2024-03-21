@@ -6,7 +6,6 @@ import {
   findParentNode,
   setLineThrough,
 } from './uiFunctions';
-import uiControl from './uiControls';
 
 import todoList from './core';
 
@@ -31,7 +30,6 @@ function setCheckedHandler(e) {
   const pos = findParentNode(target, 'data-position').getAttribute('data-position');
   todoList.selectItem(pos).editCheck();
   setLineThrough(target);
-  uiControl.update();
 }
 
 function addLine(obj, num) {

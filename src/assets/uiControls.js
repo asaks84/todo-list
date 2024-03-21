@@ -21,7 +21,6 @@ const uiControl = (() => {
   };
 
   function load() {
-    console.log(loadList());
     const uiList = sortParam(loadList(), 'checked');
     if (currentFilter !== null) {
       filterArray(uiList, currentFilter.key, currentFilter.value)

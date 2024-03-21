@@ -15,6 +15,8 @@ import {
   quickSave,
 } from './uiFunctions';
 
+const mainContent = document.querySelector('body');
+
 function editMore(title) {
   uiEditItem(title);
   title.value = '';
@@ -22,6 +24,7 @@ function editMore(title) {
 function fastSave(title) {
   todoList.addItem(title.value);
   uiControl.update();
+  populateStorage();
 }
 
 addTask.addEventListener('click', uiEditItem);
@@ -33,10 +36,12 @@ addField.addEventListener('keyup', showPlusBtn);
 addMore.addEventListener('click', () => editMore(input));
 quickSave.addEventListener('click', () => fastSave(input));
 
-input.addEventListener('change', populateStorage);
+window.addEventListener('change', () => {
+  populateStorage();
+  uiControl.update();
+  console.log('atualizou');
+});
 input.setAttribute('autocomplete', 'off');
-// input.addEventListener('change', populateStorage);
-// input.setAttribute('autocomplete', 'off');
 window.onload = restoreStorage();
 
 const mainModal = document.querySelector('div#exampleModal');
@@ -44,5 +49,4 @@ mainModal.addEventListener('hidden.bs.modal', () => {
   const modalBody = mainModal.querySelector('.modal-body');
   clearContent(modalBody);
 });
-
 uiControl.load();
