@@ -11,6 +11,33 @@ a {
     color:brown;
   }
 }
+aside {
+  
+  @media (max-width: 767px) { 
+    width: 100% !important;
+    background-color: #e6e6e6;
+   }
+}
+
+div#projects {
+  position: relative;
+  @media (max-width: 767px) { 
+    &  div {
+      transition: opacity ease-in-out 100ms;
+      z-index: 10;
+      padding: .5rem 1rem;
+      position: absolute;
+      bottom: 4rem;
+      left: -100%;
+      background-color: white;
+      
+      & li {
+        white-space: nowrap;
+        padding: .25rem 0;
+      }
+    }
+   }
+}
 
 // 3rd part CSS styling
 .accordion-item:not(:first-of-type) {

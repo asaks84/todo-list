@@ -13,6 +13,7 @@ function save(title, dueDate, priority, project) {
   uiControl.update();
   populateStorage();
 }
+
 function uiEditItem(title, dueDate, priority, project) {
   const modal = document.querySelector('div.modal-body');
   // creating elements
