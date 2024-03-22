@@ -24,11 +24,6 @@ function fastSave(title) {
   uiControl.update();
   populateStorage();
 }
-function autoUpdate() {
-  populateStorage();
-  uiControl.update();
-  console.log('atualizou');
-}
 
 function setMaxHeight() {
   const list = document.getElementById('list');
@@ -56,7 +51,7 @@ const projectsIcon = document.querySelector('div#projects');
 const projectsDropdown = document.querySelector('div#projects div');
 
 projectsIcon.addEventListener('click', (event) => {
-  event.stopPropagation();
+  // event.stopPropagation();
 
   if (projectsDropdown.classList.contains('opacity-0')) {
     projectsDropdown.classList.remove('opacity-0');
@@ -80,7 +75,11 @@ addField.addEventListener('keyup', showPlusBtn);
 addMore.addEventListener('click', () => editMore(input));
 quickSave.addEventListener('click', () => fastSave(input));
 
-window.addEventListener('change', () => autoUpdate);
+window.addEventListener('change', () => {
+  populateStorage();
+  uiControl.update();
+  console.log('atualizou');
+});
 window.onload = restoreStorage();
 
 const mainModal = document.querySelector('div#exampleModal');
