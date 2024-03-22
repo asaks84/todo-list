@@ -9,83 +9,85 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
-<body class="d-flex flex-column align-items-center vh-100">
-  <header>
-    <h1>todo.List</h1>
-  </header>
-  <div class="container-lg p-0 ps-md-3 d-flex flex-column-reverse flex-md-row justify-content-between h-100">
+<body>
+  <section class="min-vh-100 h-100 d-flex flex-column align-items-center">
+    <header>
+      <h1>todo.List</h1>
+    </header>
+    <div class="container-lg p-0 ps-md-3 d-flex flex-column-reverse flex-md-row justify-content-between h-100">
 
-    <aside class="col col-3 -md-bottom">
-      <nav class="d-flex mt-1 mb-2 w-100 flex-row flex-md-column justify-content-evenly justify-content-md-start">
+      <aside class="col col-3">
+        <nav class="d-flex mt-1 mb-2 w-100 flex-row flex-md-column justify-content-evenly justify-content-md-start">
 
-        <a id="addItem" data-bs-target="#exampleModal" data-bs-toggle="modal">
-          <i class="bi bi-plus-circle fs-1 d-inline d-md-none"></i>
-          <div class="addItem pb-3 d-none d-md-block">
-            <i class="bi bi-plus"></i>
-            <span>Adicionar item</span>
-          </div>
-        </a>
+          <a id="addItem" data-bs-target="#exampleModal" data-bs-toggle="modal">
+            <i class="bi bi-plus-circle fs-1 d-inline d-md-none"></i>
+            <div class="addItem pb-3 d-none d-md-block">
+              <i class="bi bi-plus"></i>
+              <span>Adicionar item</span>
+            </div>
+          </a>
 
-        <a data-bs-toggle="modal">
           <i class="bi bi-house-fill fs-1 d-inline d-md-none"></i>
-          <div class="d-none pb-3 d-md-block">
-            <h6>
-              <i class="bi bi-house"></i>
-              Inicio
-            </h6>
-          </div>
-        </a>
+            <div class="d-none pb-3 d-md-block">
+              <a data-bs-toggle="modal">
+                <h6>
+                  <i class="bi bi-house"></i>
+                  Inicio
+                </h6>
+              </a>
+            </div>
 
-        <h6 class="d-none d-md-in-block">Projects List</h6>
-        <div id="projects">
-          <i class="bi bi-list-check fs-1 d-inline d-md-none"></i>
-          <div class="opacity-0 w-auto d-md-inline-block">
-            <ul class="list-unstyled">
-              <li class="d-flex align-items-center">
-                <i class="bi bi-hash fs-4"></i>
-                <a>Project 1</a>
-              </li>
-              <li class="d-flex align-items-center">
-                <i class="bi bi-hash fs-4"></i>
-                <a>Project 2</a>
-              </li>
-              <li class="d-flex align-items-center">
-                <i class="bi bi-hash fs-4"></i>
-                <a>Project 3</a>
-              </li>
-            </ul>
+          <h6 class="d-none d-md-in-block">Projects List</h6>
+          <div id="projects">
+            <i class="bi bi-list-check fs-1 d-inline d-md-none"></i>
+            <div class="w-auto menu-hide d-md-inline-block">
+              <ul class="list-unstyled">
+                <li class="d-flex align-items-center">
+                  <i class="bi bi-hash fs-4"></i>
+                  <a>Project 1</a>
+                </li>
+                <li class="d-flex align-items-center">
+                  <i class="bi bi-hash fs-4"></i>
+                  <a>Project 2</a>
+                </li>
+                <li class="d-flex align-items-center">
+                  <i class="bi bi-hash fs-4"></i>
+                  <a>Project 3</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </nav>
+      </aside>
+
+      <main class="col-auto col-md p-2">
+
+        <!-- HOME SCREEN  -->
+        <div>
+          <div class="input-group pb-3 gap-1 ">
+            <input autocomplete="off" id="itemTitle" type="text" class="form-control" placeholder="Nova tarefa">
+            <button id="addMore" data-bs-target="#exampleModal" data-bs-toggle="modal"
+              class="addItem btn btn-outline-warning" title="Adicionar mais informações">+</button>
+            <button id="saveItem" class="btn btn-warning text-light">Salvar</button>
           </div>
         </div>
 
-      </nav>
-    </aside>
+        <!-- TASKS LIST -->
+        <div class="accordion overflow-auto" id="list"></div>
 
-    <main class="col-auto col-md p-2">
+      </main>
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-body">
 
-      <!-- HOME SCREEN  -->
-      <div>
-        <div class="input-group pb-3 gap-1 ">
-          <input autocomplete="off" id="itemTitle" type="text" class="form-control" placeholder="Nova tarefa">
-          <button id="addMore" data-bs-target="#exampleModal" data-bs-toggle="modal"
-            class="addItem btn btn-outline-warning" title="Adicionar mais informações">+</button>
-          <button id="saveItem" class="btn btn-warning text-light">Salvar</button>
-        </div>
-      </div>
-
-      <!-- TASKS LIST -->
-      <div class="accordion overflow-auto" id="list"></div>
-
-    </main>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body">
-
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

@@ -53,19 +53,16 @@ const projectsDropdown = document.querySelector('div#projects div');
 projectsIcon.addEventListener('click', (event) => {
   // event.stopPropagation();
 
-  if (projectsDropdown.classList.contains('opacity-0')) {
-    projectsDropdown.classList.remove('opacity-0');
-    projectsDropdown.classList.add('opacity-100');
+  if (projectsDropdown.classList.contains('menu-hide')) {
+    projectsDropdown.classList.remove('menu-hide');
   } else {
-    projectsDropdown.classList.remove('opacity-100');
-    projectsDropdown.classList.add('opacity-0'); // Ocultando a div se estiver visível
+    projectsDropdown.classList.add('menu-hide');
   }
 });
 
 document.addEventListener('click', (event) => {
   if (!event.target.closest('#projects')) {
-    projectsDropdown.classList.remove('opacity-100');
-    projectsDropdown.classList.add('opacity-0');
+    projectsDropdown.classList.add('menu-hide');
   }
 });
 

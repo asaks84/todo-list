@@ -12,24 +12,33 @@ a {
   }
 }
 aside {
-  
+  z-index: 10;
   @media (max-width: 767px) { 
     width: 100% !important;
     background-color: #e6e6e6;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
    }
 }
 
 div#projects {
   position: relative;
-  @media (max-width: 767px) { 
+  @media (max-width: 767px) {
+    position: sticky;
+    bottom: 0; 
     &  div {
-      transition: opacity ease-in-out 100ms;
-      z-index: 10;
+      transition: all ease-in-out 100ms;
       padding: .5rem 1rem;
       position: absolute;
       bottom: 4rem;
       left: -100%;
-      background-color: white;
+      background-color: #f8f8f8;
+
+      &.menu-hide {
+        top: 100%;
+        opacity: 0;
+      }
       
       & li {
         white-space: nowrap;
