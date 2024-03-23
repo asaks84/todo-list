@@ -6,18 +6,18 @@ import todoList from './core';
 
 export const isChecked = (e) => e.checked === true;
 
-export function findParentNode(element, attributeName) {
-  let { parentNode } = element;
+// export function findParentNode(element, attributeName) {
+//   let { parentNode } = element;
 
-  while (parentNode) {
-    if (parentNode.hasAttribute(attributeName)) {
-      return parentNode;
-    }
-    parentNode = parentNode.parentNode;
-  }
+//   while (parentNode) {
+//     if (parentNode.hasAttribute(attributeName)) {
+//       return parentNode;
+//     }
+//     parentNode = parentNode.parentNode;
+//   }
 
-  return null; // Retorna null se não encontrou nenhum nó pai com o atributo desejado
-}
+//   return null; // Retorna null se não encontrou nenhum nó pai com o atributo desejado
+// }
 
 // start onLoad
 

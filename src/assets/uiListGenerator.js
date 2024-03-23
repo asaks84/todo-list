@@ -3,7 +3,6 @@ import { populateStorage } from './JSONFunctions';
 import {
   isChecked,
   createElement,
-  findParentNode,
   setLineThrough,
 } from './uiFunctions';
 
@@ -27,32 +26,34 @@ function insertNote(notes, body) {
 
 function setCheckedHandler(e) {
   const { target } = e;
-  const pos = findParentNode(target, 'data-position').getAttribute('data-position');
-  todoList.selectItem(pos).editCheck();
+  const id = target.getAttribute('data-id');
+  console.log(id);
+  todoList.setChecked(id);
   setLineThrough(target);
 }
 
-function addLine(obj, num) {
+function addLine(obj) {
   // LIST ITEM ------
 
   // header
-  const item = createElement('div', ['accordion-item'], {
-    'data-position': `${num}`,
-  });
+  const item = createElement('div', ['accordion-item']);
   const header = createElement('h2', ['accordion-header', 'p-1', 'd-flex', 'align-items-center', 'gap-1']);
-  const checkbox = createElement('input', ['form-check-input', 'text-bg-warning'], { type: 'checkbox' });
+  const checkbox = createElement('input', ['form-check-input', 'text-bg-warning'], {
+    type: 'checkbox',
+    'data-id': `${obj.id}`,
+  });
   const btnHeader = createElement('button', ['accordion-button', 'collapsed', 'flex-fill'], {
     type: 'button',
     'data-bs-toggle': 'collapse',
     'aria-expanded': 'false',
-    'data-bs-target': `#item-${num}`,
+    'data-bs-target': `#item-${obj.id}`,
   });
   const span = createElement('span', ['flex-fill']);
   const code = createElement('code', ['small', 'text-muted']);
 
   // body
   const itemDetails = createElement('div', ['accordion-collapse', 'collapse'], {
-    id: `item-${num}`,
+    id: `item-${obj.id}`,
   });
   const itemBody = createElement('div', ['accordion-body']);
 

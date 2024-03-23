@@ -4,7 +4,7 @@ function CreateItem(num, text, deadline = 0, project = null, priorityNum = 0, ch
   let projectName = project;
   let priority = priorityNum;
   let checked = check;
-  const id = num;
+  const id = num.toString();
   const notes = [];
 
   function editTitle(val) { title = val; }
@@ -55,6 +55,13 @@ function CreateItem(num, text, deadline = 0, project = null, priorityNum = 0, ch
 const todoList = (() => {
   const list = [];
 
+  function findObject(idValue) {
+    for (let i = 0; i < list.length; i += 1) {
+      if (list[i].getId() === idValue) return i;
+    }
+    throw Error('Object not found');
+  }
+
   function returnObj(item) {
     const id = item.getId();
     const title = item.getTitle();
@@ -70,8 +77,8 @@ const todoList = (() => {
   }
 
   const getLength = () => list.length;
-  const selectItem = (pos) => list[pos];
-  function setChecked(pos) { list[pos].editCheck(); }
+  const selectItem = (id) => list[findObject(id)];
+  function setChecked(id) { list[findObject(id)].editCheck(); }
   const allTasksList = () => list.map((obj) => (returnObj(obj)));
   function reset() { list.length = 0; }
 
@@ -82,6 +89,10 @@ const todoList = (() => {
     const id = list.length;
     const newItem = CreateItem(id, text, deadline, project, priority, checked);
     list.push(newItem);
+  }
+
+  function deleteItem(id) {
+    list.splice(findObject(id), 1);
   }
 
   const toJSON = () => {
@@ -116,6 +127,7 @@ const todoList = (() => {
     getLength,
     selectItem,
     addItem,
+    deleteItem,
     restore,
     toJSON,
     setChecked,
