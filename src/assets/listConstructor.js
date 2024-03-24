@@ -1,20 +1,8 @@
-/* eslint-disable no-param-reassign */
-import { populateStorage } from './JSONFunctions';
+import { deleteItem, edit, setCheckedHandler } from './handlers';
 import {
-  isChecked,
-  createElement,
-  setLineThrough,
-} from './uiFunctions';
-
-import todoList from './core';
-
-const list = document.querySelector('div#list');
-const hasNotes = (obj) => obj.length > 0;
-
-function addChecked(checkbox, button) {
-  checkbox.checked = true;
-  button.classList.add('text-decoration-line-through');
-}
+  addChecked, createElement, hasNotes, isChecked, list,
+} from './uiCommonFunctions';
+import uiControl from './uiController';
 
 function insertNote(notes, body) {
   notes.forEach((content) => {
@@ -24,17 +12,7 @@ function insertNote(notes, body) {
   });
 }
 
-function setCheckedHandler(e) {
-  const { target } = e;
-  const id = target.getAttribute('data-id');
-  console.log(id);
-  todoList.setChecked(id);
-  setLineThrough(target);
-}
-
 function addLine(obj) {
-  // LIST ITEM ------
-
   // header
   const item = createElement('div', ['accordion-item']);
   const header = createElement('h2', ['accordion-header', 'p-1', 'd-flex', 'align-items-center', 'gap-1']);
@@ -54,15 +32,22 @@ function addLine(obj) {
   // body
   const itemDetails = createElement('div', ['accordion-collapse', 'collapse'], {
     id: `item-${obj.id}`,
+    'data-bs-parent': '#list',
   });
   const itemBody = createElement('div', ['accordion-body']);
+  const editDeleteItem = createElement('div', ['d-flex', 'flex-row-reverse', 'col', 'gap-2']);
 
-  const btnEdit = createElement('button', ['btn', 'btn-warning']);
-  const btnDelete = createElement('button', ['btn', 'btn-danger']);
+  const btnEdit = createElement('button', ['btn', 'btn-warning'], {
+    'data-id': obj.id,
+    'data-bs-target': '#exampleModal',
+    'data-bs-toggle': 'modal',
+  });
+  const btnDelete = createElement('button', ['btn', 'btn-danger'], {
+    'data-id': obj.id,
+  });
 
   // EVENTLISTNERS OBJECTS
-  checkbox.addEventListener('change', setCheckedHandler);
-  checkbox.addEventListener('change', populateStorage);
+  checkbox.addEventListener('change', uiControl.handlers.setCheckedHandler);
 
   // FILLING CONTENT
   // header
@@ -81,6 +66,12 @@ function addLine(obj) {
   if (hasNotes(obj.notes)) {
     insertNote(obj.notes, itemBody);
   }
+  btnEdit.addEventListener('click', (elem) => {
+    edit(elem);
+  });
+  btnDelete.addEventListener('click', deleteItem);
+  editDeleteItem.append(btnDelete, btnEdit);
+  itemBody.appendChild(editDeleteItem);
   itemDetails.appendChild(itemBody);
 
   // Append elements to list
@@ -88,4 +79,5 @@ function addLine(obj) {
   list.appendChild(item);
   if (isChecked(obj)) addChecked(checkbox, btnHeader);
 }
+
 export default addLine;

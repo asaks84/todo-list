@@ -1,20 +1,35 @@
-import { populateStorage } from './JSONFunctions';
+/* eslint-disable import/no-cycle */
 import todoList from './core';
-import uiControl from './uiControls';
 import {
-  dueDateMask,
-  searchProjects,
-  createElement,
-  createPrioritySelect,
-} from './uiFunctions';
+  createElement, createPrioritySelect, dueDateMask, searchProjects,
+} from './uiCommonFunctions';
+import uiControl from './uiController';
 
-function save(title, dueDate, priority, project) {
-  todoList.addItem(title.value, dueDate.value, priority.value, project.value);
+function save(title, dueDate, priority, project, notes, id) {
+  const newObj = {
+    title: title.value,
+    dueDate: dueDate.value,
+    priority: priority.value,
+    project: project.value,
+    notes,
+  };
+  if (id !== undefined) {
+    todoList.editItem(id, newObj);
+  } else {
+    todoList.addItem(newObj);
+  }
   uiControl.update();
-  populateStorage();
 }
 
-function uiEditItem(title, dueDate, priority, project) {
+function uiEditItem(title, dueDate, priority, project, notes, id) {
+  console.log(` uiEditItem
+    id: ${id}
+    title: ${title}
+    dueDate: ${dueDate}
+    priority: ${priority}
+    project: ${project}
+    notes ${notes}
+  `);
   const modal = document.querySelector('div.modal-body');
   // creating elements
   const row1 = createElement('div', ['row']);
@@ -41,9 +56,7 @@ function uiEditItem(title, dueDate, priority, project) {
   const dateIcon = createElement('i', ['text-warning', 'small', 'bi', 'bi-calendar']);
 
   const priorityDiv = createElement('div', ['col']);
-  const selectPriority = (typeof priority !== 'undefined')
-    ? createPrioritySelect(priority)
-    : createPrioritySelect();
+  const prioritySelect = createPrioritySelect(priority);
 
   const projectDiv = createElement('div', ['col']);
   const projectInput = createElement('input', ['form-control'], {
@@ -63,6 +76,7 @@ function uiEditItem(title, dueDate, priority, project) {
   const notesContainer = createElement('div', ['container']);
   const notesHeader = createElement('h6');
   const notesRow = createElement('div', ['row', 'g-2']);
+  const notesList = createElement('div', ['notesList']);
 
   const addNoteRow = createElement('div', ['row', 'pt-2', 'justify-content-end']);
 
@@ -85,7 +99,9 @@ function uiEditItem(title, dueDate, priority, project) {
   // append elements
 
   // row 1 (title)
-  if (typeof title.value !== 'undefined') titleInput.value = title.value;
+  if (title && (typeof title === 'string' || typeof title.value !== 'undefined')) {
+    titleInput.value = typeof title === 'string' ? title : title.value;
+  }
   titleDiv.appendChild(titleInput);
 
   row1.appendChild(titleDiv);
@@ -93,15 +109,18 @@ function uiEditItem(title, dueDate, priority, project) {
   // row 2 (date, priority, project)
 
   // date
-  if (typeof dueDate !== 'undefined' && dueDate !== 0) dateInput.value = dueDate;
+  if (dueDate !== undefined && dueDate !== 0) {
+    dateInput.value = dueDate;
+  }
   datepickerToggle.appendChild(dateIcon);
   dateDiv.append(dateInput, datepickerToggle);
 
   // priority
-  priorityDiv.appendChild(selectPriority);
+  priorityDiv.appendChild(prioritySelect);
 
   // project
-  if (typeof project !== 'undefined' && project !== 0) dateInput.value = project;
+  // console.log(project);
+  if (typeof project !== 'undefined' && project !== 0) projectInput.value = project;
   projectDiv.append(projectInput, projectDatalist);
 
   row2.append(dateDiv, priorityDiv, projectDiv);
@@ -114,7 +133,13 @@ function uiEditItem(title, dueDate, priority, project) {
   addNoteLink.append(addNoteIcon, addNoteText);
   addNoteDiv.appendChild(addNoteLink);
   addNoteRow.appendChild(addNoteDiv);
-  notesRow.appendChild(addNoteRow);
+  if (notes) {
+    notes.forEach((note) => {
+      // preciso cirar o layout das notas
+      notesList.innerHTML += `<span>${note}</span>`;
+    });
+  }
+  notesRow.append(notesList, addNoteRow);
   notesContainer.append(notesHeader, notesRow);
 
   row3.appendChild(notesContainer);
@@ -122,7 +147,8 @@ function uiEditItem(title, dueDate, priority, project) {
   // row4 (buttons)
   cancelBtn.textContent = 'Cancel';
   saveBtn.textContent = 'Save';
-  saveBtn.addEventListener('click', () => save(titleInput, dateInput, projectInput, projectInput));
+  if (id !== undefined) saveBtn.addEventListener('click', () => save(titleInput, dateInput, prioritySelect, projectInput, notes, id));
+  else saveBtn.addEventListener('click', () => save(titleInput, dateInput, prioritySelect, projectInput));
   saveDiv.appendChild(saveBtn);
   cancelDiv.appendChild(cancelBtn);
 

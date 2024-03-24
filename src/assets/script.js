@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import './style.scss';
-import todoList from './core';
 import { populateStorage, restoreStorage } from './JSONFunctions';
-import uiEditItem from './uiAddItemConstructor';
-import uiControl from './uiControls';
+
 import {
   clearContent,
   showPlusBtn,
@@ -13,20 +11,18 @@ import {
   input,
   addMore,
   quickSave,
-} from './uiFunctions';
+  list,
+} from './uiCommonFunctions';
+import uiEditItem from './editConstructor';
+import { editMore, fastSave } from './handlers';
+import uiControl from './uiController';
 
-function editMore(title) {
-  uiEditItem(title);
-  title.value = '';
-}
-function fastSave(title) {
-  todoList.addItem(title.value);
-  uiControl.update();
-  populateStorage();
-}
+const projectsIcon = document.querySelector('div#projects');
+const projectsDropdown = document.querySelector('div#projects div');
+const mainModal = document.querySelector('div#exampleModal');
 
+// set max height for list items
 function setMaxHeight() {
-  const list = document.getElementById('list');
   if (window.innerWidth < 768) {
     // get padding top + bottom form main element
     let mainPadding = parseFloat(window.getComputedStyle(document.querySelector('main'), null)
@@ -47,12 +43,34 @@ function setMaxHeight() {
   } else list.style.maxHeight = 'none';
 }
 
-const projectsIcon = document.querySelector('div#projects');
-const projectsDropdown = document.querySelector('div#projects div');
+// eventListeners
 
-projectsIcon.addEventListener('click', (event) => {
-  // event.stopPropagation();
+// home page button functions
+addTask.addEventListener('click', uiEditItem);
+addField.addEventListener('keydown', showPlusBtn);
+addField.addEventListener('keyup', showPlusBtn);
+addMore.addEventListener('click', () => editMore(input));
+quickSave.addEventListener('click', () => fastSave(input));
 
+// set height limit for list items
+window.addEventListener('load', setMaxHeight);
+window.addEventListener('resize', setMaxHeight);
+
+// auto-save
+window.addEventListener('change', () => {
+  uiControl.update();
+});
+
+// restore data when it's loaded
+window.onload = restoreStorage();
+
+// menu for mobile version
+document.addEventListener('click', (event) => {
+  if (!event.target.closest('#projects')) {
+    projectsDropdown.classList.add('menu-hide');
+  }
+});
+projectsIcon.addEventListener('click', () => {
   if (projectsDropdown.classList.contains('menu-hide')) {
     projectsDropdown.classList.remove('menu-hide');
   } else {
@@ -60,32 +78,10 @@ projectsIcon.addEventListener('click', (event) => {
   }
 });
 
-document.addEventListener('click', (event) => {
-  if (!event.target.closest('#projects')) {
-    projectsDropdown.classList.add('menu-hide');
-  }
-});
-
-addTask.addEventListener('click', uiEditItem);
-addField.addEventListener('keydown', showPlusBtn);
-addField.addEventListener('keyup', showPlusBtn);
-addMore.addEventListener('click', () => editMore(input));
-quickSave.addEventListener('click', () => fastSave(input));
-
-window.addEventListener('change', () => {
-  populateStorage();
-  uiControl.update();
-  console.log('atualizou');
-});
-window.onload = restoreStorage();
-
-const mainModal = document.querySelector('div#exampleModal');
+// clear modal content everytime it's closed
 mainModal.addEventListener('hidden.bs.modal', () => {
-  const modalBody = mainModal.querySelector('.modal-body');
-  clearContent(modalBody);
+  clearContent(mainModal.querySelector('.modal-body'));
 });
 
-window.addEventListener('load', setMaxHeight);
-window.addEventListener('resize', setMaxHeight);
-
+// start app
 uiControl.load();

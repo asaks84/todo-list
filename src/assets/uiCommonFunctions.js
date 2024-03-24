@@ -4,22 +4,23 @@ import IMask from 'imask';
 import { maskDate } from './date';
 import todoList from './core';
 
+export const list = document.querySelector('div#list');
+export const addField = document.querySelector('input#itemTitle');
+export const input = document.querySelector('input');
+export const addTask = document.querySelector('a#addItem');
+export const addMore = document.querySelector('button#addMore');
+export const quickSave = document.querySelector('button#saveItem');
+
 export const isChecked = (e) => e.checked === true;
+export const hasNotes = (obj) => obj.length > 0;
+export const loadList = () => [...todoList.allTasksList()];
+export const sortParam = (arr, param) => [...arr]
+  .sort((a, b) => ((a[param] < b[param]) ? -1 : 1));
 
-// export function findParentNode(element, attributeName) {
-//   let { parentNode } = element;
-
-//   while (parentNode) {
-//     if (parentNode.hasAttribute(attributeName)) {
-//       return parentNode;
-//     }
-//     parentNode = parentNode.parentNode;
-//   }
-
-//   return null; // Retorna null se não encontrou nenhum nó pai com o atributo desejado
-// }
-
-// start onLoad
+export function addChecked(checkbox, button) {
+  checkbox.checked = true;
+  button.classList.add('text-decoration-line-through');
+}
 
 const specialCharsEntries = [
   ['ÀÁÂÃÄÅ', 'A'],
@@ -40,6 +41,8 @@ const specialCharsMap = Object.fromEntries(
   specialCharsEntries.flatMap(([chars, value]) => [...chars].map((char) => [char, value])),
 );
 
+// ELEMENT CREATORS
+
 export function setAttrs(elem, attrs) {
   Object.keys(attrs).forEach((key) => {
     if (key !== undefined && attrs[key] !== undefined) {
@@ -57,19 +60,13 @@ export function createElement(tag, classNames = [], attributes = {}) {
   return element;
 }
 
-export function createOption(value, text, selected = false) {
+export function createOption(value, text, selected) {
   const option = createElement('option', [], { value });
   option.textContent = text;
   if (selected) {
-    option.setAttribute('selected', 'selected');
+    option.setAttribute('selected', '');
   }
   return option;
-}
-
-export function clearContent(elem) {
-  while (elem.firstChild) {
-    elem.removeChild(elem.lastChild);
-  }
 }
 
 export function createPrioritySelect(num = 0) {
@@ -78,11 +75,19 @@ export function createPrioritySelect(num = 0) {
   });
   for (let i = 0; i < 4; i += 1) {
     const text = i === 0 ? 'Prioridade' : `Prioridade ${i}`;
-    const selected = i === num;
+    const selected = i === parseInt(num, 10);
     const option = createOption(i, text, selected);
     select.appendChild(option);
   }
   return select;
+}
+
+// UI FUNCTIONS
+
+export function clearContent(elem) {
+  while (elem.firstChild) {
+    elem.removeChild(elem.lastChild);
+  }
 }
 
 // ADD/EDIT NEW TASK SCREEN FUNCTIONS
@@ -122,7 +127,6 @@ export function searchProjects() {
 }
 
 // DATEPICKER AND MASK FUNCTIONS
-
 export function dueDateMask() {
   const dueDate = document.querySelector('#dueDate');
   const flatElem = document.querySelector('div.flatpickr');
@@ -155,12 +159,6 @@ export function setLineThrough(e) {
   }
 }
 
-export const addField = document.querySelector('input#itemTitle');
-export const input = document.querySelector('input');
-export const addTask = document.querySelector('a#addItem');
-export const addMore = document.querySelector('button#addMore');
-export const quickSave = document.querySelector('button#saveItem');
-
 export function showPlusBtn() {
   // Encontra o botão +
   const plusBtn = addField.nextElementSibling;
@@ -178,3 +176,14 @@ export function showPlusBtn() {
     saveBtn.classList.remove('revealItem');
   }
 }
+
+// export function findParentNode(element, attributeName) {
+//   let { parentNode } = element;
+//   while (parentNode) {
+//     if (parentNode.hasAttribute(attributeName)) {
+//       return parentNode;
+//     }
+//     parentNode = parentNode.parentNode;
+//   }
+//   return null; // Retorna null se não encontrou nenhum nó pai com o atributo desejado
+// }

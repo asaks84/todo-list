@@ -64,6 +64,7 @@ div#projects {
 
 .accordion-button:not(.collapsed) {
   background: none;
+  box-shadow: none;
 }
 .accordion-item {
   position: relative;

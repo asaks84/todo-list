@@ -1,4 +1,4 @@
-function CreateItem(num, text, deadline = 0, project = null, priorityNum = 0, check = false) {
+function CreateItem(num, text, deadline = 0, priorityNum = 0, project = null, check = false) {
   let title = text;
   let dueDate = deadline;
   let projectName = project;
@@ -55,7 +55,7 @@ function CreateItem(num, text, deadline = 0, project = null, priorityNum = 0, ch
 const todoList = (() => {
   const list = [];
 
-  function findObject(idValue) {
+  function findObjPos(idValue) {
     for (let i = 0; i < list.length; i += 1) {
       if (list[i].getId() === idValue) return i;
     }
@@ -63,36 +63,64 @@ const todoList = (() => {
   }
 
   function returnObj(item) {
-    const id = item.getId();
     const title = item.getTitle();
     const project = item.getProject();
     const dueDate = item.getDueDate();
     const priority = item.getPriority();
     const checked = item.getCheck();
     const notes = item.getAllNotes();
+    const id = item.getId();
 
     return {
       id, title, project, dueDate, priority, checked, notes,
     };
   }
-
+  const getItem = (id) => returnObj(list[findObjPos(id)]);
   const getLength = () => list.length;
-  const selectItem = (id) => list[findObject(id)];
-  function setChecked(id) { list[findObject(id)].editCheck(); }
+  function setChecked(id) { list[findObjPos(id)].editCheck(); }
   const allTasksList = () => list.map((obj) => (returnObj(obj)));
   function reset() { list.length = 0; }
 
   const getProjects = () => list.map((item) => item.getProject())
     .filter((value, pos, self) => value !== null && self.indexOf(value) === pos);
 
-  function addItem(text, deadline, project, priority, checked) {
+  function addItem(obj) {
     const id = list.length;
-    const newItem = CreateItem(id, text, deadline, project, priority, checked);
+    const newItem = CreateItem(id, obj.title, obj.dueDate, obj.priority, obj.project, obj.checked);
     list.push(newItem);
   }
 
+  function editItem(objID, newObj) {
+    const objToEdit = list[findObjPos(objID)];
+    const item = returnObj(objToEdit);
+    Object.keys(newObj).forEach((key) => {
+      if (item[key] !== undefined && item[key] !== newObj[key]) {
+        switch (key) {
+          case 'title':
+            objToEdit.editTitle(newObj[key]);
+            break;
+          case 'project':
+            objToEdit.editProject(newObj[key]);
+            break;
+          case 'dueDate':
+            objToEdit.editDueDate(newObj[key]);
+            break;
+          case 'priority':
+            objToEdit.editPriority(newObj[key]);
+            break;
+          default:
+            throw Error('Chave inválida');
+        }
+      }
+    });
+  }
+
+  function editNote(id, pos, val) {
+    list[findObjPos(id)].editNote(pos, val);
+  }
+
   function deleteItem(id) {
-    list.splice(findObject(id), 1);
+    list.splice(findObjPos(id), 1);
   }
 
   const toJSON = () => {
@@ -116,7 +144,7 @@ const todoList = (() => {
       ({
         id, title, project, dueDate, priority, checked, notes,
       }) => {
-        const newItem = CreateItem(id, title, dueDate, project, priority, checked);
+        const newItem = CreateItem(id, title, dueDate, priority, project, checked);
         notes.forEach((note) => newItem.addNote(note));
         list.push(newItem);
       },
@@ -125,7 +153,8 @@ const todoList = (() => {
 
   return {
     getLength,
-    selectItem,
+    editNote,
+    editItem,
     addItem,
     deleteItem,
     restore,
@@ -135,15 +164,8 @@ const todoList = (() => {
     reset,
     returnObj,
     allTasksList,
+    getItem,
   };
 })();
 
 export default todoList;
-
-/*
-###########################################
-################           ################
-################ TEST AREA ################
-################           ################
-###########################################
-*/
