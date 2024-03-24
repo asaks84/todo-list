@@ -1,4 +1,4 @@
-import { deleteItem, edit, setCheckedHandler } from './handlers';
+/* eslint-disable import/no-cycle */
 import {
   addChecked, createElement, hasNotes, isChecked, list,
 } from './uiCommonFunctions';
@@ -67,9 +67,9 @@ function addLine(obj) {
     insertNote(obj.notes, itemBody);
   }
   btnEdit.addEventListener('click', (elem) => {
-    edit(elem);
+    uiControl.handlers.edit(elem);
   });
-  btnDelete.addEventListener('click', deleteItem);
+  btnDelete.addEventListener('click', uiControl.handlers.deleteItem);
   editDeleteItem.append(btnDelete, btnEdit);
   itemBody.appendChild(editDeleteItem);
   itemDetails.appendChild(itemBody);

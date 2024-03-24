@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 import './style.scss';
-import { populateStorage, restoreStorage } from './JSONFunctions';
+import { restoreStorage } from './JSONFunctions';
 
 import {
   clearContent,
@@ -14,7 +14,6 @@ import {
   list,
 } from './uiCommonFunctions';
 import uiEditItem from './editConstructor';
-import { editMore, fastSave } from './handlers';
 import uiControl from './uiController';
 
 const projectsIcon = document.querySelector('div#projects');
@@ -49,8 +48,8 @@ function setMaxHeight() {
 addTask.addEventListener('click', uiEditItem);
 addField.addEventListener('keydown', showPlusBtn);
 addField.addEventListener('keyup', showPlusBtn);
-addMore.addEventListener('click', () => editMore(input));
-quickSave.addEventListener('click', () => fastSave(input));
+addMore.addEventListener('click', () => uiControl.handlers.editMore(input));
+quickSave.addEventListener('click', () => uiControl.handlers.fastSave(input));
 
 // set height limit for list items
 window.addEventListener('load', setMaxHeight);

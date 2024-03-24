@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { populateStorage } from './JSONFunctions';
 import todoList from './core';
 import uiEditItem from './editConstructor';
@@ -57,18 +58,21 @@ const uiControl = (() => {
       setLineThrough(target);
       update();
     }
-    
+
     // home buttons
     function editMore(title) {
       uiEditItem(title);
       title.value = '';
     }
-    
+
     function fastSave(title) {
-      todoList.addItem(title.value);
+      console.log(title.value);
+      const newObj = { title: title.value };
+      todoList.addItem(newObj);
+      title.value = '';
       update();
     }
-    
+
     function edit(elem) {
       elem.stopImmediatePropagation();
       const { target } = elem;
@@ -76,7 +80,7 @@ const uiControl = (() => {
       console.log(obj);
       uiEditItem(obj.title, obj.dueDate, obj.priority, obj.project, obj.notes, obj.id);
     }
-    
+
     function deleteItem(item) {
       const { target } = item;
       todoList.deleteItem(target.getAttribute('data-id'));
@@ -89,8 +93,8 @@ const uiControl = (() => {
       fastSave,
       edit,
       deleteItem,
-    }
-  })()
+    };
+  })();
 
   return {
     handlers,
