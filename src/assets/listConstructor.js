@@ -26,6 +26,34 @@ function addLine(obj) {
     'aria-expanded': 'false',
     'data-bs-target': `#item-${obj.id}`,
   });
+  const priority = (() => {
+    switch (parseInt(obj.priority, 10)) {
+      case 1:
+        return createElement('i', ['me-2', 'bi', 'bi-flag-fill', 'text-success'], {
+          'data-toggle': 'tooltip',
+          'data-placement': 'top',
+          title: 'Priority 1',
+        });
+      case 2:
+        return createElement('i', ['me-2', 'bi', 'bi-flag-fill', 'text-warning'], {
+          'data-toggle': 'tooltip',
+          'data-placement': 'top',
+          title: 'Priority 2',
+        });
+      case 3:
+        return createElement('i', ['me-2', 'bi', 'bi-flag-fill', 'text-danger'], {
+          'data-toggle': 'tooltip',
+          'data-placement': 'top',
+          title: 'Priority 3',
+        });
+      default:
+        return createElement('i', ['me-2', 'bi', 'bi-flag'], {
+          'data-toggle': 'tooltip',
+          'data-placement': 'top',
+          title: 'Priority 0',
+        });
+    }
+  })();
   const span = createElement('span', ['flex-fill']);
   const code = createElement('code', ['small', 'text-muted']);
 
@@ -59,7 +87,7 @@ function addLine(obj) {
   btnDelete.textContent = 'Delete';
 
   // Appending content
-  btnHeader.append(span, code);
+  btnHeader.append(span, priority, code);
   header.append(checkbox, btnHeader);
 
   // Body content

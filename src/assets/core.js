@@ -84,8 +84,15 @@ const todoList = (() => {
   const getProjects = () => list.map((item) => item.getProject())
     .filter((value, pos, self) => value !== null && self.indexOf(value) === pos);
 
+  function getBiggerId() {
+    if (list.length === 0) return 0;
+    const latestObj = list.reduce((max, obj) => (obj.getId() > max.getId() ? obj : max));
+    console.log(latestObj.getId());
+    return latestObj.getId();
+  }
+
   function addItem(obj) {
-    const id = list.length;
+    const id = getBiggerId() === 0 ? 0 : parseInt(getBiggerId(), 10) + 1;
     const newItem = CreateItem(id, obj.title, obj.dueDate, obj.priority, obj.project, obj.checked);
     list.push(newItem);
   }

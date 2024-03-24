@@ -66,7 +66,6 @@ const uiControl = (() => {
     }
 
     function fastSave(title) {
-      console.log(title.value);
       const newObj = { title: title.value };
       todoList.addItem(newObj);
       title.value = '';

@@ -43,7 +43,6 @@ function setMaxHeight() {
 }
 
 // eventListeners
-
 // home page button functions
 addTask.addEventListener('click', uiEditItem);
 addField.addEventListener('keydown', showPlusBtn);
@@ -81,6 +80,13 @@ projectsIcon.addEventListener('click', () => {
 mainModal.addEventListener('hidden.bs.modal', () => {
   clearContent(mainModal.querySelector('.modal-body'));
 });
+
+window.addEventListener('DOMContentLoaded', () => {
+  const tooltips = document.querySelectorAll('[data-toggle="tooltip"]');
+  tooltips.forEach((tip) => {
+    tip = new bootstrap.Tooltip(tip);
+  });
+}, false);
 
 // start app
 uiControl.load();
