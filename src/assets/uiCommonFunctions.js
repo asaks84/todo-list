@@ -71,10 +71,10 @@ export function createOption(value, text, selected) {
 
 export function createPrioritySelect(num = 0) {
   const select = createElement('select', ['form-select'], {
-    'aria-label': 'Prioridade',
+    'aria-label': 'Priority',
   });
   for (let i = 0; i < 4; i += 1) {
-    const text = i === 0 ? 'Prioridade' : `Prioridade ${i}`;
+    const text = i === 0 ? '-- Select Priority' : `Priority ${i}`;
     const selected = i === parseInt(num, 10);
     const option = createOption(i, text, selected);
     select.appendChild(option);
@@ -150,15 +150,6 @@ export function dueDateMask() {
 
 // main screen interactions
 // check visual effect
-export function setLineThrough(e) {
-  const text = e.nextElementSibling;
-  if (isChecked(e)) {
-    text.classList.add('text-decoration-line-through');
-  } else {
-    text.classList.remove('text-decoration-line-through');
-  }
-}
-
 export function showPlusBtn() {
   // Encontra o botão +
   const plusBtn = addField.nextElementSibling;

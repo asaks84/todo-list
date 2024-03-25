@@ -8,7 +8,6 @@ import {
   list,
   sortParam,
   loadList,
-  setLineThrough,
 } from './uiCommonFunctions';
 
 // UI Controller
@@ -51,14 +50,6 @@ const uiControl = (() => {
   }
 
   const handlers = (() => {
-    function setCheckedHandler(e) {
-      const { target } = e;
-      const id = target.getAttribute('data-id');
-      todoList.setChecked(id);
-      setLineThrough(target);
-      update();
-    }
-
     // home buttons
     function editMore(title) {
       uiEditItem(title);
@@ -76,7 +67,6 @@ const uiControl = (() => {
       elem.stopImmediatePropagation();
       const { target } = elem;
       const obj = todoList.getItem(target.getAttribute('data-id'));
-      console.log(obj);
       uiEditItem(obj.title, obj.dueDate, obj.priority, obj.project, obj.notes, obj.id);
     }
 
@@ -87,7 +77,6 @@ const uiControl = (() => {
     }
 
     return {
-      setCheckedHandler,
       editMore,
       fastSave,
       edit,
