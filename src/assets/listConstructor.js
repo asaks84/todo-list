@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import todoList from './core';
 import {
   addChecked, createElement, hasNotes, isChecked, list,
 } from './uiCommonFunctions';
@@ -12,10 +13,33 @@ function insertNote(notes, body) {
   });
 }
 
+function setCheckedHandler(e) {
+  const { target } = e;
+  const id = target.getAttribute('data-id');
+  todoList.setChecked(id);
+}
+
+const prioritySettings = {
+  0: { title: 'No priority', array: ['bi-octagon'] },
+  1: { title: 'Priority 1', array: ['bi-exclamation-octagon-fill', 'text-success'] },
+  2: { title: 'Priority 2', array: ['bi-exclamation-octagon-fill', 'text-warning'] },
+  3: { title: 'Priority 3', array: ['bi-exclamation-octagon-fill', 'text-danger'] },
+};
+
+function selectPriority(num) {
+  const obj = prioritySettings[num];
+  const standardClasses = ['small', 'ms-2', 'bi'];
+  const classes = standardClasses.concat(obj.array);
+  const attrs = { 'data-toggle': 'tooltip', 'data-placement': 'top' };
+  attrs.title = obj.title;
+
+  return createElement('i', classes, attrs);
+}
+
 function addLine(obj) {
   // header
   const item = createElement('div', ['accordion-item']);
-  const header = createElement('h2', ['accordion-header', 'p-1', 'd-flex', 'align-items-center', 'gap-1']);
+  const header = createElement('div', ['accordion-header', 'p-1', 'd-flex', 'align-items-center', 'gap-1']);
   const checkbox = createElement('input', ['form-check-input', 'text-bg-warning'], {
     type: 'checkbox',
     'data-id': `${obj.id}`,
@@ -26,34 +50,7 @@ function addLine(obj) {
     'aria-expanded': 'false',
     'data-bs-target': `#item-${obj.id}`,
   });
-  const priority = (() => {
-    switch (parseInt(obj.priority, 10)) {
-      case 1:
-        return createElement('i', ['me-2', 'bi', 'bi-flag-fill', 'text-success'], {
-          'data-toggle': 'tooltip',
-          'data-placement': 'top',
-          title: 'Priority 1',
-        });
-      case 2:
-        return createElement('i', ['me-2', 'bi', 'bi-flag-fill', 'text-warning'], {
-          'data-toggle': 'tooltip',
-          'data-placement': 'top',
-          title: 'Priority 2',
-        });
-      case 3:
-        return createElement('i', ['me-2', 'bi', 'bi-flag-fill', 'text-danger'], {
-          'data-toggle': 'tooltip',
-          'data-placement': 'top',
-          title: 'Priority 3',
-        });
-      default:
-        return createElement('i', ['me-2', 'bi', 'bi-flag'], {
-          'data-toggle': 'tooltip',
-          'data-placement': 'top',
-          title: 'Priority 0',
-        });
-    }
-  })();
+  const priority = selectPriority(parseInt(obj.priority, 10));
   const span = createElement('span', ['flex-fill']);
   const code = createElement('code', ['small', 'text-muted']);
 
@@ -75,7 +72,7 @@ function addLine(obj) {
   });
 
   // EVENTLISTNERS OBJECTS
-  checkbox.addEventListener('change', uiControl.handlers.setCheckedHandler);
+  checkbox.addEventListener('change', setCheckedHandler);
 
   // FILLING CONTENT
   // header
@@ -87,8 +84,8 @@ function addLine(obj) {
   btnDelete.textContent = 'Delete';
 
   // Appending content
-  btnHeader.append(span, priority, code);
-  header.append(checkbox, btnHeader);
+  btnHeader.append(span, code);
+  header.append(checkbox, priority, btnHeader);
 
   // Body content
   if (hasNotes(obj.notes)) {

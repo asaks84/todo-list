@@ -22,14 +22,6 @@ function save(title, dueDate, priority, project, notes, id) {
 }
 
 function uiEditItem(title, dueDate, priority, project, notes, id) {
-  console.log(` uiEditItem
-    id: ${id}
-    title: ${title}
-    dueDate: ${dueDate}
-    priority: ${priority}
-    project: ${project}
-    notes ${notes}
-  `);
   const modal = document.querySelector('div.modal-body');
   // creating elements
   const row1 = createElement('div', ['row']);
@@ -88,7 +80,7 @@ function uiEditItem(title, dueDate, priority, project, notes, id) {
   const row4 = createElement('div', ['row', 'g-2', 'pt-3', 'justify-content-start', 'flex-row-reverse']);
 
   const saveDiv = createElement('div', ['col-auto']);
-  const saveBtn = createElement('button', ['btn', 'btn-warning', 'text-light'], {
+  const saveBtn = createElement('button', ['btn', 'btn-warning'], {
     'data-bs-dismiss': 'modal',
   });
   const cancelDiv = createElement('div', ['col-auto']);

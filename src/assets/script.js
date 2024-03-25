@@ -84,6 +84,7 @@ mainModal.addEventListener('hidden.bs.modal', () => {
 window.addEventListener('DOMContentLoaded', () => {
   const tooltips = document.querySelectorAll('[data-toggle="tooltip"]');
   tooltips.forEach((tip) => {
+    // eslint-disable-next-line no-undef
     tip = new bootstrap.Tooltip(tip);
   });
 }, false);
