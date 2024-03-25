@@ -144,6 +144,7 @@ export function dueDateMask() {
 }
 
 // main screen interactions
+
 // check visual effect
 export function showPlusBtn() {
   // Encontra o botão +

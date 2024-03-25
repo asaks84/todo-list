@@ -16,6 +16,7 @@ import {
 import uiEditItem from './editConstructor';
 import uiControl from './uiController';
 
+const homeLink = document.querySelector('a#home');
 const projectsIcon = document.querySelector('div#projects');
 const projectsDropdown = document.querySelector('div#projects div');
 const mainModal = document.querySelector('div#exampleModal');
@@ -44,6 +45,9 @@ function setMaxHeight() {
 
 // eventListeners
 // home page button functions
+homeLink.addEventListener('click', () => {
+  uiControl.update('clear');
+});
 addTask.addEventListener('click', uiEditItem);
 addField.addEventListener('keydown', showPlusBtn);
 addField.addEventListener('keyup', showPlusBtn);

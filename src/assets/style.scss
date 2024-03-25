@@ -32,8 +32,9 @@ div#projects {
       padding: .5rem 1rem;
       position: absolute;
       bottom: 4rem;
-      left: -100%;
+      left: -50px;
       background-color: #f8f8f8;
+      min-width: 130px;
 
       &.menu-hide {
         top: 100%;

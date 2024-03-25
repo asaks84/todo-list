@@ -1,41 +1,27 @@
-function CreateItem(num, text, deadline = 0, priorityNum = 0, projectName = null, check = false) {
-  const title = text;
-  const dueDate = deadline;
-  const project = projectName;
-  const priority = priorityNum;
-  const checked = check;
-  const id = num.toString();
+function CreateItem(id, title, dueDate = 0, priority = 0, project = null, checked = false) {
   const notes = [];
 
-  const getTitle = () => title;
-  const getPriority = () => priority;
-  const getDueDate = () => dueDate;
-  const getProject = () => project;
-  const getCheck = () => checked;
   function addNote(val) { notes.push(val); }
   function deleteNote(pos) { notes.splice(pos, 1); }
   function editNote(pos, val) { notes[pos] = val; }
   const getAllNotes = () => notes;
   const getNote = (pos) => notes[pos];
-  const getId = () => id;
 
   function updateItem(newValues) {
     const updatedValues = {
-      title: (newValues.title !== undefined && newValues.title !== getTitle())
-        ? newValues.title : getTitle(),
-      dueDate: (newValues.dueDate !== undefined && newValues.dueDate !== getDueDate())
-        ? newValues.dueDate : getDueDate(),
-      project: (newValues.project !== undefined
-        && newValues.project !== getProject())
-        ? newValues.project : getProject(),
-      priority: (newValues.priority !== undefined
-        && newValues.priority !== getPriority())
-        ? newValues.priority : getPriority(),
-      checked: (newValues.checked !== undefined && newValues.checked !== getCheck())
-        ? newValues.checked : getCheck(),
+      title: (newValues.title !== undefined && newValues.title !== title)
+        ? newValues.title : title,
+      dueDate: (newValues.dueDate !== undefined && newValues.dueDate !== dueDate)
+        ? newValues.dueDate : dueDate,
+      project: (newValues.project !== undefined && newValues.project !== project)
+        ? newValues.project : project,
+      priority: (newValues.priority !== undefined && newValues.priority !== priority)
+        ? newValues.priority : priority,
+      checked: (newValues.checked !== undefined && newValues.checked !== checked)
+        ? newValues.checked : checked,
     };
     return CreateItem(
-      getId(),
+      id,
       updatedValues.title,
       updatedValues.dueDate,
       updatedValues.priority,
@@ -44,20 +30,20 @@ function CreateItem(num, text, deadline = 0, priorityNum = 0, projectName = null
     );
   }
 
-  return {
+  return Object.freeze({
+    title,
+    dueDate,
+    project,
+    priority,
+    checked,
+    id,
     addNote,
     editNote,
     getNote,
     deleteNote,
     getAllNotes,
-    getTitle,
-    getDueDate,
-    getProject,
-    getPriority,
-    getCheck,
-    getId,
     updateItem,
-  };
+  });
 }
 
 const todoList = (() => {
@@ -65,40 +51,37 @@ const todoList = (() => {
 
   function findObjPos(idValue) {
     for (let i = 0; i < list.length; i += 1) {
-      if (list[i].getId() === idValue) return i;
+      if (list[i].id === parseInt(idValue, 10)) return i;
     }
     throw Error('Object not found');
   }
 
-  function returnObj(item) {
-    const title = item.getTitle();
-    const project = item.getProject();
-    const dueDate = item.getDueDate();
-    const priority = item.getPriority();
-    const checked = item.getCheck();
-    const notes = item.getAllNotes();
-    const id = item.getId();
+  const returnObj = (item) => ({
+    title: item.title,
+    project: item.project,
+    dueDate: item.dueDate,
+    priority: item.priority,
+    checked: item.checked,
+    notes: item.getAllNotes(),
+    id: item.id,
+  });
 
-    return {
-      id, title, project, dueDate, priority, checked, notes,
-    };
-  }
   const getItem = (id) => returnObj(list[findObjPos(id)]);
   const getLength = () => list.length;
   const allTasksList = () => list.map((obj) => (returnObj(obj)));
   function reset() { list.length = 0; }
 
-  const getProjects = () => list.map((item) => item.getProject())
+  const getProjects = () => list.map((item) => item.project)
     .filter((value, pos, self) => value !== null && self.indexOf(value) === pos);
 
   function getBiggerId() {
-    if (list.length === 0) return 0;
-    const latestObj = list.reduce((max, obj) => (obj.getId() > max.getId() ? obj : max));
-    return latestObj.getId();
+    const latestObj = list.reduce((max, obj) => (obj.id > max.id ? obj : max), { id: 0 });
+    console.log(latestObj);
+    return latestObj.id;
   }
 
   function addItem(obj) {
-    const id = getBiggerId() === 0 ? 0 : parseInt(getBiggerId(), 10) + 1;
+    const id = list.length === 0 ? 0 : parseInt(getBiggerId(), 10) + 1;
     const newItem = CreateItem(id, obj.title, obj.dueDate, obj.priority, obj.project, obj.checked);
     list.push(newItem);
   }
@@ -110,7 +93,7 @@ const todoList = (() => {
   }
 
   function setChecked(id) {
-    const result = { checked: !list[findObjPos(id)].getCheck() };
+    const result = { checked: !list[findObjPos(id)].checked };
     editItem(id, result);
   }
 
