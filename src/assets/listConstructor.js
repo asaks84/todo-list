@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import todoList from './core';
 import {
-  addChecked, createElement, hasNotes, isChecked, list,
+  createElement, hasNotes, isChecked, list,
 } from './uiCommonFunctions';
 import uiControl from './uiController';
 
@@ -11,6 +11,12 @@ function insertNote(notes, body) {
     contentDiv.innerHTML = content;
     body.appendChild(contentDiv);
   });
+}
+
+function addChecked(checkbox, button, priority) {
+  checkbox.checked = true;
+  button.classList.add('text-decoration-line-through', 'opacity-50');
+  priority.classList.add('opacity-50');
 }
 
 function setCheckedHandler(e) {
@@ -102,7 +108,7 @@ function addLine(obj) {
   // Append elements to list
   item.append(header, itemDetails);
   list.appendChild(item);
-  if (isChecked(obj)) addChecked(checkbox, btnHeader);
+  if (isChecked(obj)) addChecked(checkbox, btnHeader, priority);
 }
 
 export default addLine;

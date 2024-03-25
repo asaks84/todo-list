@@ -87,7 +87,6 @@ const todoList = (() => {
   function getBiggerId() {
     if (list.length === 0) return 0;
     const latestObj = list.reduce((max, obj) => (obj.getId() > max.getId() ? obj : max));
-    console.log(latestObj.getId());
     return latestObj.getId();
   }
 
@@ -125,28 +124,19 @@ const todoList = (() => {
   function editNote(id, pos, val) {
     list[findObjPos(id)].editNote(pos, val);
   }
+  function addNote(id, val) {
+    list[findObjPos(id)].addNote(val);
+  }
 
   function deleteItem(id) {
     list.splice(findObjPos(id), 1);
   }
 
-  const toJSON = () => {
-    const listData = list.map((item) => ({
-      id: item.getId(),
-      title: item.getTitle(),
-      project: item.getProject(),
-      dueDate: item.getDueDate(),
-      priority: item.getPriority(),
-      checked: item.getCheck(),
-      notes: item.getAllNotes(),
-    }));
-
-    return JSON.stringify({ list: listData }, '', 1);
-  };
+  const toJSON = () => JSON.stringify(list.map((item) => returnObj(item)), '', 1);
 
   const restore = (data) => {
     reset();
-    const { list: listData } = JSON.parse(data);
+    const listData = JSON.parse(data);
     listData.forEach(
       ({
         id, title, project, dueDate, priority, checked, notes,
@@ -160,6 +150,7 @@ const todoList = (() => {
 
   return {
     getLength,
+    addNote,
     editNote,
     editItem,
     addItem,

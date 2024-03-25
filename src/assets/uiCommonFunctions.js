@@ -17,11 +17,6 @@ export const loadList = () => [...todoList.allTasksList()];
 export const sortParam = (arr, param) => [...arr]
   .sort((a, b) => ((a[param] < b[param]) ? -1 : 1));
 
-export function addChecked(checkbox, button) {
-  checkbox.checked = true;
-  button.classList.add('text-decoration-line-through');
-}
-
 const specialCharsEntries = [
   ['ÀÁÂÃÄÅ', 'A'],
   ['àáâãäå', 'a'],
