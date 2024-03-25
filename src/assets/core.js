@@ -1,22 +1,16 @@
-function CreateItem(num, text, deadline = 0, priorityNum = 0, project = null, check = false) {
-  let title = text;
-  let dueDate = deadline;
-  let projectName = project;
-  let priority = priorityNum;
-  let checked = check;
+function CreateItem(num, text, deadline = 0, priorityNum = 0, projectName = null, check = false) {
+  const title = text;
+  const dueDate = deadline;
+  const project = projectName;
+  const priority = priorityNum;
+  const checked = check;
   const id = num.toString();
   const notes = [];
 
-  function editTitle(val) { title = val; }
   const getTitle = () => title;
-  function editPriority(val) { priority = val; }
   const getPriority = () => priority;
-  function deleteDuoDate() { dueDate = 0; }
-  function editDueDate(val) { dueDate = val; }
   const getDueDate = () => dueDate;
-  function editProject(val) { projectName = val; }
-  const getProject = () => projectName;
-  function editCheck() { checked = !checked; }
+  const getProject = () => project;
   const getCheck = () => checked;
   function addNote(val) { notes.push(val); }
   function deleteNote(pos) { notes.splice(pos, 1); }
@@ -25,30 +19,44 @@ function CreateItem(num, text, deadline = 0, priorityNum = 0, project = null, ch
   const getNote = (pos) => notes[pos];
   const getId = () => id;
 
+  function updateItem(newValues) {
+    const updatedValues = {
+      title: (newValues.title !== undefined && newValues.title !== getTitle())
+        ? newValues.title : getTitle(),
+      dueDate: (newValues.dueDate !== undefined && newValues.dueDate !== getDueDate())
+        ? newValues.dueDate : getDueDate(),
+      project: (newValues.project !== undefined
+        && newValues.project !== getProject())
+        ? newValues.project : getProject(),
+      priority: (newValues.priority !== undefined
+        && newValues.priority !== getPriority())
+        ? newValues.priority : getPriority(),
+      checked: (newValues.checked !== undefined && newValues.checked !== getCheck())
+        ? newValues.checked : getCheck(),
+    };
+    return CreateItem(
+      getId(),
+      updatedValues.title,
+      updatedValues.dueDate,
+      updatedValues.priority,
+      updatedValues.project,
+      updatedValues.checked,
+    );
+  }
+
   return {
     addNote,
     editNote,
     getNote,
     deleteNote,
     getAllNotes,
-
-    editTitle,
     getTitle,
-
-    editDueDate,
-    deleteDuoDate,
     getDueDate,
-
-    editProject,
     getProject,
-
-    editPriority,
     getPriority,
-
-    editCheck,
     getCheck,
-
     getId,
+    updateItem,
   };
 }
 
@@ -77,7 +85,6 @@ const todoList = (() => {
   }
   const getItem = (id) => returnObj(list[findObjPos(id)]);
   const getLength = () => list.length;
-  function setChecked(id) { list[findObjPos(id)].editCheck(); }
   const allTasksList = () => list.map((obj) => (returnObj(obj)));
   function reset() { list.length = 0; }
 
@@ -98,27 +105,13 @@ const todoList = (() => {
 
   function editItem(objID, newObj) {
     const objToEdit = list[findObjPos(objID)];
-    const item = returnObj(objToEdit);
-    Object.keys(newObj).forEach((key) => {
-      if (item[key] !== undefined && item[key] !== newObj[key]) {
-        switch (key) {
-          case 'title':
-            objToEdit.editTitle(newObj[key]);
-            break;
-          case 'project':
-            objToEdit.editProject(newObj[key]);
-            break;
-          case 'dueDate':
-            objToEdit.editDueDate(newObj[key]);
-            break;
-          case 'priority':
-            objToEdit.editPriority(newObj[key]);
-            break;
-          default:
-            throw Error('Chave inválida');
-        }
-      }
-    });
+    const result = objToEdit.updateItem(newObj);
+    list[findObjPos(objID)] = result;
+  }
+
+  function setChecked(id) {
+    const result = { checked: !list[findObjPos(id)].getCheck() };
+    editItem(id, result);
   }
 
   function editNote(id, pos, val) {
@@ -136,8 +129,7 @@ const todoList = (() => {
 
   const restore = (data) => {
     reset();
-    const listData = JSON.parse(data);
-    listData.forEach(
+    JSON.parse(data).forEach(
       ({
         id, title, project, dueDate, priority, checked, notes,
       }) => {

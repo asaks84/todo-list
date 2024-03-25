@@ -56,7 +56,7 @@ function addLine(obj) {
     'aria-expanded': 'false',
     'data-bs-target': `#item-${obj.id}`,
   });
-  const priority = selectPriority(parseInt(obj.priority, 10));
+  const priority = selectPriority(obj.priority, 10);
   const span = createElement('span', ['flex-fill']);
   const code = createElement('code', ['small', 'text-muted']);
 
