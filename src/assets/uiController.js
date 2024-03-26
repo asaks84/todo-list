@@ -4,7 +4,7 @@ import todoList from './core';
 import uiEditItem from './editConstructor';
 import addLine from './listConstructor';
 import {
-  clearContent, list, sortParam, loadList, createElement,
+  clearContent, list, sortParam, loadList, createElement, showPlusBtn,
 } from './uiCommonFunctions';
 
 const displayProject = document.querySelector('ul#projects');

@@ -31,12 +31,12 @@ function CreateItem(id, title, dueDate = 0, priority = 0, project = null, checke
   }
 
   return Object.freeze({
+    id,
     title,
     dueDate,
     project,
     priority,
     checked,
-    id,
     addNote,
     editNote,
     getNote,
@@ -108,7 +108,7 @@ const todoList = (() => {
     list.splice(findObjPos(id), 1);
   }
 
-  const toJSON = () => JSON.stringify(list.map((item) => returnObj(item)), '', 1);
+  const toJSON = () => JSON.stringify(list.map((item) => returnObj(item)));
 
   const restore = (data) => {
     reset();
