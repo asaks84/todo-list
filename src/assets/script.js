@@ -15,6 +15,7 @@ import {
 } from './uiCommonFunctions';
 import uiEditItem from './editConstructor';
 import uiControl from './uiController';
+import todoList from './core';
 
 const homeLink = document.querySelector('a#home');
 const projectsIcon = document.querySelector('div#projects');
@@ -88,10 +89,19 @@ mainModal.addEventListener('hidden.bs.modal', () => {
 window.addEventListener('DOMContentLoaded', () => {
   const tooltips = document.querySelectorAll('[data-toggle="tooltip"]');
   tooltips.forEach((tip) => {
-    // eslint-disable-next-line no-undef
+    // eslint-disable-next-line no-undef, no-param-reassign
     tip = new bootstrap.Tooltip(tip);
   });
 }, false);
 
 // start app
 uiControl.load();
+
+(function startDemo() {
+  if (todoList.getLength() !== 0) return;
+  todoList.addItem({ title: 'Clean the house', priority: 1, project: 'House'});
+  todoList.addItem({ title: 'Supermarket', priority: 3, project: 'Shopping' });
+  todoList.addItem({ title: 'Free Market', project: 'Shopping' });
+  todoList.addItem({ title: 'PC Maintenance', priority: 2, project: 'Work' });
+  uiControl.update();
+}());

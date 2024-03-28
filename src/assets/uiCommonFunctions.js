@@ -10,7 +10,9 @@ export const input = document.querySelector('input');
 export const addTask = document.querySelector('a#addItem');
 export const addMore = document.querySelector('button#addMore');
 export const quickSave = document.querySelector('button#saveItem');
+export const displayProject = document.querySelector('ul#projects');
 
+export const setFilterList = (elem) => elem.filter((value, index, self) => value !== '' && self.indexOf(value) === index);
 export const isChecked = (e) => e.checked === true;
 export const hasNotes = (obj) => obj.length > 0;
 export const loadList = () => [...todoList.allTasksList()];
@@ -96,14 +98,11 @@ function removeSpecials(text) {
   return search;
 }
 // projects datalist autocomplete
-function autoComplete(search) {
-  const projects = todoList.getProjects();
-  return projects.filter((value) => {
-    const valueLowercase = removeSpecials(value.toLowerCase());
-    const searchLowercase = removeSpecials(search.toLowerCase());
-    return valueLowercase.includes(searchLowercase);
-  });
-}
+const autoComplete = (search) => todoList.getProjects().filter((value) => {
+  const valueLowercase = removeSpecials(value.toLowerCase());
+  const searchLowercase = removeSpecials(search.toLowerCase());
+  return valueLowercase.includes(searchLowercase);
+});
 
 // calling functions to autocomplete Project field
 

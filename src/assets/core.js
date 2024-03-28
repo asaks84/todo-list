@@ -76,7 +76,6 @@ const todoList = (() => {
 
   function getBiggerId() {
     const latestObj = list.reduce((max, obj) => (obj.id > max.id ? obj : max), { id: 0 });
-    console.log(latestObj);
     return latestObj.id;
   }
 
