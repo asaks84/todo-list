@@ -20,7 +20,7 @@ function CreateItem(id, title, dueDate = 0, priority = 0, project = null, checke
       checked: (newValues.checked !== undefined && newValues.checked !== checked)
         ? newValues.checked : checked,
     };
-    return CreateItem(
+    const newObj = CreateItem(
       id,
       updatedValues.title,
       updatedValues.dueDate,
@@ -28,6 +28,8 @@ function CreateItem(id, title, dueDate = 0, priority = 0, project = null, checke
       updatedValues.project,
       updatedValues.checked,
     );
+    if (notes.length > 0) notes.forEach((note) => newObj.addNote(note));
+    return newObj;
   }
 
   return Object.freeze({

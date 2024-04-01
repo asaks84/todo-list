@@ -28,6 +28,7 @@ function setMaxHeight() {
     // get padding top + bottom form main element
     let mainPadding = parseFloat(window.getComputedStyle(document.querySelector('main'), null)
       .getPropertyValue('padding-top').match(/\d+(\.\d+)?/));
+
     mainPadding += parseFloat(window.getComputedStyle(document.querySelector('main'), null)
       .getPropertyValue('padding-bottom').match(/\d+(\.\d+)?/));
 
@@ -39,7 +40,8 @@ function setMaxHeight() {
     // const footerHeight = document.querySelector('footer').offsetHeight;
 
     // set max size for task list
-    const maxHeight = bodyHeight - headerHeight - insetItemHeight - asideHeight - mainPadding;
+    const maxHeight = bodyHeight
+      - headerHeight - insetItemHeight - asideHeight - mainPadding;
     list.style.maxHeight = `${maxHeight}px`;
   } else list.style.maxHeight = 'none';
 }
@@ -99,9 +101,13 @@ uiControl.load();
 
 (function startDemo() {
   if (todoList.getLength() !== 0) return;
-  todoList.addItem({ title: 'Clean the house', priority: 1, project: 'House'});
+  todoList.addItem({ title: 'Clean the house', priority: 1, project: 'House' });
   todoList.addItem({ title: 'Supermarket', priority: 3, project: 'Shopping' });
   todoList.addItem({ title: 'Free Market', project: 'Shopping' });
   todoList.addItem({ title: 'PC Maintenance', priority: 2, project: 'Work' });
+  todoList.addNote(2, 'Banana');
+  todoList.addNote(2, 'Green onions');
+  todoList.addNote(2, 'Radish');
+  todoList.addNote(2, 'Pastel for lunch :)');
   uiControl.update();
 }());

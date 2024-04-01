@@ -27,17 +27,9 @@ const uiControl = (() => {
     constructorProjectList();
     const uiList = sortParam(loadList(), 'checked');
     if (currentFilter !== null) {
-      filterArray(uiList, currentFilter.key, currentFilter.value).forEach(
-        (obj) => {
-          const index = loadList().findIndex((item) => item.id === obj.id);
-          addLine(obj, index);
-        },
-      );
+      filterArray(uiList, currentFilter.key, currentFilter.value).forEach((obj) => addLine(obj));
     } else {
-      uiList.forEach((obj) => {
-        const index = loadList().findIndex((item) => item.id === obj.id);
-        addLine(obj, index);
-      });
+      uiList.forEach((obj) => addLine(obj));
     }
   }
 

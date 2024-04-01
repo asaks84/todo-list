@@ -1,9 +1,11 @@
 /* eslint-disable import/no-cycle */
 import todoList from './core';
 import {
-  createElement, hasNotes, isChecked, list,
+  createElement, hasNotes, list,
 } from './uiCommonFunctions';
 import uiControl from './uiController';
+
+const isChecked = (e) => e.checked === true;
 
 function insertNote(notes, body) {
   notes.forEach((content) => {

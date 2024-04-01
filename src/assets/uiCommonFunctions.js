@@ -13,7 +13,6 @@ export const quickSave = document.querySelector('button#saveItem');
 export const displayProject = document.querySelector('ul#projects');
 
 export const setFilterList = (elem) => elem.filter((value, index, self) => value !== '' && self.indexOf(value) === index);
-export const isChecked = (e) => e.checked === true;
 export const hasNotes = (obj) => obj.length > 0;
 export const loadList = () => [...todoList.allTasksList()];
 export const sortParam = (arr, param) => [...arr]
