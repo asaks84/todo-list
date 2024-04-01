@@ -1,7 +1,5 @@
 /* eslint-disable import/no-cycle */
 import { populateStorage } from './JSONFunctions';
-import todoList from './core';
-import uiEditItem from './editConstructor';
 import addLine from './listConstructor';
 import constructorProjectList from './projectListConstructor';
 import {
@@ -43,50 +41,7 @@ const uiControl = (() => {
     console.warn('Updated!');
   }
 
-  const handlers = (() => {
-    // home buttons
-    function editMore(title) {
-      uiEditItem(title);
-      title.value = '';
-    }
-
-    function fastSave(title) {
-      const newObj = { title: title.value };
-      todoList.addItem(newObj);
-      title.value = '';
-      update();
-    }
-
-    function edit(elem) {
-      elem.stopImmediatePropagation();
-      const { target } = elem;
-      const obj = todoList.getItem(target.getAttribute('data-id'));
-      uiEditItem(
-        obj.title,
-        obj.dueDate,
-        obj.priority,
-        obj.project,
-        obj.notes,
-        obj.id,
-      );
-    }
-
-    function deleteItem(item) {
-      const { target } = item;
-      todoList.deleteItem(target.getAttribute('data-id'));
-      update();
-    }
-
-    return {
-      editMore,
-      fastSave,
-      edit,
-      deleteItem,
-    };
-  })();
-
   return {
-    handlers,
     setCurrentFilter,
     load,
     update,

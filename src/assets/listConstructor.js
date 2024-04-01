@@ -1,9 +1,9 @@
 /* eslint-disable import/no-cycle */
 import todoList from './core';
+import { deleteItem, edit } from './handlers';
 import {
   createElement, hasNotes, list,
 } from './uiCommonFunctions';
-import uiControl from './uiController';
 
 const isChecked = (e) => e.checked === true;
 
@@ -100,9 +100,9 @@ function addLine(obj) {
     insertNote(obj.notes, itemBody);
   }
   btnEdit.addEventListener('click', (elem) => {
-    uiControl.handlers.edit(elem);
+    edit(elem);
   });
-  btnDelete.addEventListener('click', uiControl.handlers.deleteItem);
+  btnDelete.addEventListener('click', deleteItem);
   editDeleteItem.append(btnDelete, btnEdit);
   itemBody.appendChild(editDeleteItem);
   itemDetails.appendChild(itemBody);
