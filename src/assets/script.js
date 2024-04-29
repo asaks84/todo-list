@@ -12,6 +12,7 @@ import {
   addMore,
   quickSave,
   list,
+  mainModal,
 } from './uiCommonFunctions';
 import uiEditItem from './editConstructor';
 import uiControl from './uiController';
@@ -20,16 +21,17 @@ import todoList from './core';
 const homeLink = document.querySelector('a#home');
 const projectsIcon = document.querySelector('div#projects');
 const projectsDropdown = document.querySelector('div#projects div');
-const mainModal = document.querySelector('div#exampleModal');
 
 // set max height for list items
 function setMaxHeight() {
   if (window.innerWidth < 768) {
     // get padding top + bottom form main element
-    let mainPadding = parseFloat(window.getComputedStyle(document.querySelector('main'), null)
+    let mainPadding = parseFloat(window.getComputedStyle(document
+      .querySelector('main'), null)
       .getPropertyValue('padding-top').match(/\d+(\.\d+)?/));
 
-    mainPadding += parseFloat(window.getComputedStyle(document.querySelector('main'), null)
+    mainPadding += parseFloat(window.getComputedStyle(document
+      .querySelector('main'), null)
       .getPropertyValue('padding-bottom').match(/\d+(\.\d+)?/));
 
     // get other elements size

@@ -1,7 +1,12 @@
 /* eslint-disable import/no-cycle */
 import todoList from './core';
 import {
-  createElement, createPrioritySelect, dueDateMask, searchProjects,
+  createElement,
+  createPrioritySelect,
+  dueDateMask,
+  searchProjects,
+  mainModal,
+  clearContent,
 } from './uiCommonFunctions';
 import uiControl from './uiController';
 
@@ -21,6 +26,22 @@ function save(title, dueDate, priority, project, notes, id) {
   uiControl.update();
 }
 
+function deleteNote(id, noteIndex) {
+  console.log('ID:', id);
+  console.log('Note Index:', noteIndex);
+  todoList.deleteNote(id, noteIndex);
+  clearContent(mainModal.querySelector('.modal-body'));
+  const obj = todoList.getItem(id);
+  uiEditItem(
+    obj.title,
+    obj.dueDate,
+    obj.priority,
+    obj.project,
+    obj.notes,
+    obj.id,
+  );
+}
+
 function uiEditItem(title, dueDate, priority, project, notes, id) {
   const modal = document.querySelector('div.modal-body');
   // creating elements
@@ -31,7 +52,10 @@ function uiEditItem(title, dueDate, priority, project, notes, id) {
     type: 'text',
     placeholder: 'Nova Tarefa...',
   });
-  const row2 = createElement('div', ['bg-gray', 'row', 'g-0', 'gap-2', 'flex-nowrap']);
+  const row2 = createElement(
+    'div',
+    ['bg-gray', 'row', 'g-0', 'gap-2', 'flex-nowrap'],
+  );
 
   const dateDiv = createElement('div', ['date', 'flatpickr', 'col']);
   const dateInput = createElement('input', ['form-control', 'flatpickr-input'], {
@@ -68,7 +92,7 @@ function uiEditItem(title, dueDate, priority, project, notes, id) {
   const notesContainer = createElement('div', ['container']);
   const notesHeader = createElement('h6');
   const notesRow = createElement('div', ['row', 'g-2']);
-  const notesList = createElement('div', ['notesList']);
+  const notesList = createElement('ul', ['list-unstyled']);
 
   const addNoteRow = createElement('div', ['row', 'pt-2', 'justify-content-end']);
 
@@ -126,9 +150,20 @@ function uiEditItem(title, dueDate, priority, project, notes, id) {
   addNoteDiv.appendChild(addNoteLink);
   addNoteRow.appendChild(addNoteDiv);
   if (notes) {
-    notes.forEach((note) => {
-      // preciso cirar o layout das notas
-      notesList.innerHTML += `<span>${note}</span>`;
+    notes.forEach((note, index) => {
+      const listItem = createElement('li');
+      const deleteLink = createElement('a');
+      const deleteIcon = createElement('i', ['bi', 'bi-trash3']);
+      const text = createElement('span');
+
+      deleteLink.appendChild(deleteIcon);
+      deleteLink.addEventListener('click', () => {
+        deleteNote(id, index);
+      });
+
+      text.textContent = note;
+      listItem.append(deleteLink, text);
+      notesList.appendChild(listItem);
     });
   }
   notesRow.append(notesList, addNoteRow);

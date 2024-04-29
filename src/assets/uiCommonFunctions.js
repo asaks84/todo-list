@@ -11,6 +11,7 @@ export const addTask = document.querySelector('a#addItem');
 export const addMore = document.querySelector('button#addMore');
 export const quickSave = document.querySelector('button#saveItem');
 export const displayProject = document.querySelector('ul#projects');
+export const mainModal = document.querySelector('div#exampleModal');
 
 export const setFilterList = (elem) => elem.filter((value, index, self) => value !== '' && self.indexOf(value) === index);
 export const hasNotes = (obj) => obj.length > 0;

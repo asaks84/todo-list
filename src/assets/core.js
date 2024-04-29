@@ -101,6 +101,9 @@ const todoList = (() => {
   function editNote(id, pos, val) {
     list[findObjPos(id)].editNote(pos, val);
   }
+  function deleteNote(id, pos) {
+    list[findObjPos(id)].deleteNote(pos);
+  }
   function addNote(id, val) {
     list[findObjPos(id)].addNote(val);
   }
@@ -128,6 +131,7 @@ const todoList = (() => {
     getLength,
     addNote,
     editNote,
+    deleteNote,
     editItem,
     addItem,
     deleteItem,
